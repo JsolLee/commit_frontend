@@ -3,7 +3,7 @@ import {Routes, Route} from "react-router-dom";
 import Home from "./router/Home";
 import Community from "./router/Community/Community";
 import News from "./router/News/News";
-import Mypage from "./router/Mypage/Mypage";
+import Mypage_main from "./router/Mypage/Mypage_main";
 import Login from "./router/Member/Login";
 import Join from "./router/Member/join";
 import FindId from "./router/Member/findid";
@@ -19,7 +19,7 @@ function App() {
         <Route path="/News" element={<News/>}/>
         <Route path="/Job" element={<Job/>}/>
         <Route path="/Community" element={<Community/>}/>
-        <Route path="/Mypage" element={<Mypage/>}/>
+        <Route path="/Mypage/*" element={<Mypage_main/>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/join" element={<Join/>}/>
         <Route path="/Findid" element={<FindId/>}/>
