@@ -10,7 +10,7 @@ const BoardDetail = () => {
       <main className="mt-5 pt-5">
         <Container fluid className="px-4">
           <div className="text-center">
-            <h1>커뮤니티</h1>
+            <h1>Community</h1>
           </div>
           <hr />
           <Breadcrumb>
@@ -37,7 +37,7 @@ const BoardDetail = () => {
                       <Col className="text-end">
                         <Form.Label htmlFor="title" className="form-label"
                           style={{ fontWeight: 'bold' }}>
-                          작성자: 이현재
+                          작성자: 작성자
                         </Form.Label>
                       </Col>
                     </Row>
@@ -47,7 +47,7 @@ const BoardDetail = () => {
                 {/*제목 영역 */}
                 <InputGroup className="mb-1">
                     <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>제목</InputGroup.Text>
-                    <Form.Control value={'에이콘 가는길 어디에요? 뉴진스의 하입보이요'} disabled
+                    <Form.Control value={'게시글'} disabled
                      style={{ backgroundColor: '#fff', color: '#000' }}  />
                 </InputGroup>
 
@@ -68,10 +68,9 @@ const BoardDetail = () => {
                 <div className="mb-4">
                   <Card>
                     <Card.Body style={{ height: '400px' }}>
-                      Baby, got me looking so crazy<br></br>
-                      빠져버리는 daydream<br></br>
-                      Got me feeling you<br></br>
-                      너도 말해줄래                      
+                      <br></br>
+                      <br></br>
+                      <br></br>                    
                     </Card.Body>
                   </Card>
                 </div>

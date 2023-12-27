@@ -13,7 +13,7 @@ import Pagination from 'react-bootstrap/Pagination';
 const CommunityHeader = () => (
     <div className="text-center position-relative">
         <img src={communityImage} alt="Community" className="img-fluid" />
-        <h1 className="overlay-text">전체글</h1>
+        <h1 className="overlay-text">Community</h1>
         <br></br><br></br><br></br><br></br>
     </div>
 );
@@ -92,7 +92,7 @@ class BoardList extends Component {
                                             <Chat></Chat>100
                                         </Link>
                                     </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>이현재</td>
+                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자1</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
                                 </tr>
 
@@ -107,7 +107,7 @@ class BoardList extends Component {
                                             <Chat></Chat>100
                                         </Link>
                                     </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>이현재</td>
+                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자2</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
                                 </tr>
 
@@ -122,7 +122,7 @@ class BoardList extends Component {
                                             <Chat></Chat>100
                                         </Link>
                                     </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>이현재</td>
+                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자3</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
                                 </tr>
 
@@ -137,7 +137,7 @@ class BoardList extends Component {
                                             <Chat></Chat>100
                                         </Link>
                                     </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>이현재</td>
+                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자4</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
                                 </tr>
 
@@ -152,7 +152,7 @@ class BoardList extends Component {
                                             <Chat></Chat>100
                                         </Link>
                                     </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>이현재</td>
+                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자5</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
                                 </tr>
 

@@ -6,8 +6,8 @@ import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
 import FileUpload from './fileupload.js';
 
 const BoardEdit = () => {
-  const [title, setTitle] = useState('에이콘 가는길 어디에요? 뉴진스의 하입보이요.');
-  const [content, setContent] = useState('Baby, got me looking so crazy\n빠져버리는 daydream\nGot me feeling you\n너도 말해줄래');
+  const [title, setTitle] = useState('게시글');
+  const [content, setContent] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('전체글');
 
@@ -70,7 +70,7 @@ const BoardEdit = () => {
 
               {/* Use a button to trigger the update and show the alert */}
                 <div className="d-flex justify-content-end mt-3">
-                    <Link to = '/'>
+                    <Link to = '/Community'>
                         <Button variant="primary" onClick={handleUpdate}>
                             수정완료
                         </Button>
