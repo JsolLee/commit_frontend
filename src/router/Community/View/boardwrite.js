@@ -68,7 +68,7 @@ const BoardWrite = () => {
               )}
 
               <div className="d-flex justify-content-end">
-                <Link to='/Community'>
+                <Link to='/Community/boardlist'>
                   <Button variant="primary" onClick={handleUpdate}>
                     등록
                   </Button>

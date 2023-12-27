@@ -83,7 +83,7 @@ class BoardList extends Component {
                                 <tr>
                                     <td className="text-center" style={{ fontSize: '20px' }}>1</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='boarddetail' style={{ color: "black", textDecoration: "none", }}>
+                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none", }}>
                                             게시글 1
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <PeopleFill className="me-2" />100&nbsp;
@@ -98,7 +98,7 @@ class BoardList extends Component {
                                 <tr>
                                     <td className="text-center" style={{ fontSize: '20px' }}>2</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='boarddetail' style={{ color: "black", textDecoration: "none" }}>
+                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
                                             게시글 2
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <PeopleFill className="me-2" />100&nbsp;
@@ -113,7 +113,7 @@ class BoardList extends Component {
                                 <tr>
                                     <td className="text-center" style={{ fontSize: '20px' }}>3</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='boarddetail' style={{ color: "black", textDecoration: "none" }}>
+                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
                                             게시글 3
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <PeopleFill className="me-2" />100&nbsp;
@@ -128,7 +128,7 @@ class BoardList extends Component {
                                 <tr>
                                     <td className="text-center" style={{ fontSize: '20px' }}>4</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='boarddetail' style={{ color: "black", textDecoration: "none" }}>
+                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
                                             게시글 4
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <PeopleFill className="me-2" />100&nbsp;
@@ -143,7 +143,7 @@ class BoardList extends Component {
                                 <tr>
                                     <td className="text-center" style={{ fontSize: '20px' }}>5</td>
                                     <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='boarddetail' style={{ color: "black", textDecoration: "none" }}>
+                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
                                             게시글 5
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <PeopleFill className="me-2" />100&nbsp;
@@ -158,7 +158,7 @@ class BoardList extends Component {
                             </tbody>
                         </Table>
                         <div className="d-flex justify-content-end mt-3">
-                            <Link to="boardwrite">
+                            <Link to="/Community/boardwrite">
                                 <Button variant="primary">글쓰기</Button><br></br><br></br>
                             </Link>
                         </div>

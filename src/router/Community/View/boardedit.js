@@ -7,7 +7,7 @@ import FileUpload from './fileupload.js';
 
 const BoardEdit = () => {
   const [title, setTitle] = useState('게시글');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState('글 내용');
   const [showAlert, setShowAlert] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('전체글');
 
@@ -70,7 +70,7 @@ const BoardEdit = () => {
 
               {/* Use a button to trigger the update and show the alert */}
                 <div className="d-flex justify-content-end mt-3">
-                    <Link to = '/Community'>
+                    <Link to = '/Community/boardlist'>
                         <Button variant="primary" onClick={handleUpdate}>
                             수정완료
                         </Button>

@@ -68,9 +68,7 @@ const BoardDetail = () => {
                 <div className="mb-4">
                   <Card>
                     <Card.Body style={{ height: '400px' }}>
-                      <br></br>
-                      <br></br>
-                      <br></br>                    
+                      글 내용                    
                     </Card.Body>
                   </Card>
                 </div>
@@ -94,7 +92,7 @@ const BoardDetail = () => {
                 {/* 수정 및 삭제 버튼 */}
                 <div className="position-relative">
                   <div className="position-absolute bottom-0 start-0">
-                    <Link to='boardedit' style={{ color: "black", textDecoration: "none" }}>
+                    <Link to='/Community/boardedit' style={{ color: "black", textDecoration: "none" }}>
                       <Button variant="outline-primary" className="mb-2">
                         수정
                       </Button>&nbsp;
