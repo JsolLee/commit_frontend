@@ -18,3 +18,9 @@
     height: 30vh; /* 화면 높이의 30%로 설정 */
     object-fit: cover; /* 이미지가 잘릴 경우 화면에 꽉 차게 설정 */
 }
+
+/*** Header ***/
+.page-header {
+	background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("../../../asset/job/job1.jpg") center no-repeat;
+	background-size: cover;
+}

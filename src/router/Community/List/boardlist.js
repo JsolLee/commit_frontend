@@ -6,16 +6,20 @@ import Button from "react-bootstrap/Button";
 import { InputGroup, FormControl, Dropdown, Container } from 'react-bootstrap';
 import { PeopleFill, HeartFill, Chat } from "react-bootstrap-icons";
 import { Link } from 'react-router-dom';
-import communityImage from './list_image.jpg';
 import './boardlist.css'
 import Pagination from 'react-bootstrap/Pagination';
 
 const CommunityHeader = () => (
-    <div className="text-center position-relative">
-        <img src={communityImage} alt="Community" className="img-fluid" />
-        <h1 className="overlay-text">Community</h1>
-        <br></br><br></br><br></br><br></br>
-    </div>
+    <div className="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container text-center py-5">
+          <h1 className="display-2 text-white fw-bold mb-4 animated slideInDown">Community</h1>
+        </div>
+      </div>
+    // <div className="text-center position-relative">
+    //     <img src={communityImage} alt="Community" className="img-fluid" />
+    //     <h1 className="overlay-text">Community</h1>
+    //     <br></br><br></br>
+    // </div>
 );
 
 class BoardList extends Component {
