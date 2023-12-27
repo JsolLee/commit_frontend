@@ -50,11 +50,10 @@ class BoardList extends Component {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item eventKey="전체글">전체글</Dropdown.Item>
-                                    <Dropdown.Item eventKey="구인/구직">구인/구직</Dropdown.Item>
                                     <Dropdown.Item eventKey="이직/신입">이직/신입</Dropdown.Item>
-                                    <Dropdown.Item eventKey="면접">면접</Dropdown.Item>
                                     <Dropdown.Item eventKey="자소서">자소서</Dropdown.Item>
                                     <Dropdown.Item eventKey="합격자조언">합격자조언</Dropdown.Item>
+                                    <Dropdown.Item eventKey="구인/구직">구인/구직</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
 
