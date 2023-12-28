@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import { ButtonGroup, ToggleButton, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/Mypage.css";
 
@@ -10,11 +11,13 @@ const My_activity = () => {
 
   const radios = [
     { name: '내가 쓴 글', value: '1', id: 'my-content'},
-    { name: '내가 쓴 댓글', value: '2', id: 'my-comment'}
+    { name: '내가 쓴 뉴스 댓글', value: '2', id: 'my-news-comment'},
+    { name: '내가 쓴 커뮤니티 댓글', value: '3', id: 'my-community-comment'}
   ];
 
   const myContent = ['내가 쓴 글1', '내가 쓴 글2', '내가 쓴 글3'];
-  const myComment = ['내가 쓴 댓글1', '내가 쓴 댓글2', '내가 쓴 댓글3'];
+  const myNewsComment = ['내가 쓴 뉴스 댓글1', '내가 쓴 뉴스 댓글2', '내가 쓴 뉴스 댓글3'];
+  const myCommunityComment = ['내가 쓴 커뮤니티 댓글1', '내가 쓴 커뮤니티 댓글2', '내가 쓴 커뮤니티 댓글3'];
 
 
   return (
@@ -59,7 +62,7 @@ const My_activity = () => {
                       className="form-check-label"
                       type={`checkbox`}
                       id={`my-content${idx}`}
-                      label={`${type}`}
+                      label={<Link to={`/Mypage`}>{`${type}`}</Link>}
                     />
                   </li>
                 ))}
@@ -68,21 +71,46 @@ const My_activity = () => {
           </ul>
         </div>
 
-        {/* 내가 쓴 댓글 목록 */}
-        <div className={`${radioId === 'my-comment' ? `activity-comment-list` : 'activity-comment-list group-hidden'}`}>
-          <ul className="list-group" id="group-comment">
+        {/* 내가 쓴 뉴스 댓글 목록 */}
+        <div className={`${radioId === 'my-news-comment' ? `activity-news-comment-list` : 'activity-news-comment-list group-hidden'}`}>
+          <ul className="list-group" id="group-news-comment">
             <li className="list-group-item list-group-top">
               <label className="list-title">제목</label>
             </li>
             <Form>
               <li className="rounded-bottom">
-                {myComment.map((type, idx) => (
+                {myNewsComment.map((type, idx) => (
                   <li key={`default-${type}`} className="list-group-item">
                     <Form.Check
                       className="form-check-label"
                       type={`checkbox`}
-                      id={`my-comment${idx}`}
-                      label={`${type}`}
+                      id={`my-news-comment${idx}`}
+                      label={<Link to={`/Mypage`}>{`${type}`}</Link>}
+                    />
+                  </li>
+                ))}
+              </li>
+            </Form>
+          </ul>
+        </div>
+
+        {/* 내가 쓴 커뮤니티 댓글 목록 */}
+        <div className={`${radioId === 'my-community-comment' ? `activity-community-comment-list` : 'activity-community-comment-list group-hidden'}`}>
+          <ul className="list-group" id="group-community-comment">
+            <li className="list-group-item list-group-top">
+              <label className="list-title">제목</label>
+            </li>
+            <Form>
+              <li className="rounded-bottom">
+                {myCommunityComment.map((type, idx) => (
+                  <li key={`default-${type}`} className="list-group-item">
+                    <Form.Check
+                      className="form-check-label"
+                      type={`checkbox`}
+                      id={`my-community-comment${idx}`}
+                      label={<Link to={`/Mypage`}>{`${type}`}</Link>}
+                      // label={<Link to={`/Mypage-${idx}`}>{`${type}`}</Link>} --> idx로 페이지 매핑 가능
+                      
                     />
                   </li>
                 ))}

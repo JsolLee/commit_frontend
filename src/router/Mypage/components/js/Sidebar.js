@@ -7,8 +7,8 @@ import "../css/Sidebar.css"
 const Sidebar = () => {
   const menus = [
     { name: "회원정보", path: '/Mypage', icon: <PersonCircle width={20} height={20} /> },
-    { name: "좋아요 / 관심기업", path: '/Mypage/My_like', icon: <ChatSquareHeart width={20} height={20} /> },
-    { name: "스크랩", path: '/Mypage/My_scrap', icon: <Clipboard2Check width={20} height={20} /> },
+    { name: "나의 좋아요", path: '/Mypage/My_like', icon: <ChatSquareHeart width={20} height={20} /> },
+    { name: "나의 스크랩", path: '/Mypage/My_scrap', icon: <Clipboard2Check width={20} height={20} /> },
     { name: "내가 쓴 글 / 댓글", path: '/Mypage/My_activity', icon: <ChatSquareText width={20} height={20} /> }
   ];
   const pathName = useLocation().pathname;

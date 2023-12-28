@@ -11,7 +11,7 @@ function User_out(props) {
   }
 
   const goOut = () => {
-    navigate('/Mypage');
+    navigate('/');
   }
 
   return (
