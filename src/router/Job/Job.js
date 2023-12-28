@@ -126,7 +126,7 @@ const Job = () => {
         <div className="job-list">
           <ul className="list-group list-group-flush">
             {data.map((lists) => (
-              <li className="list-group-item list-group-li">
+              <li key={`${lists}`}className="list-group-item list-group-li">
                 {<div className="list-group-company"><a>{lists.companyName}</a></div>}
                 {<div className="list-group-title"><a>{lists.title}</a></div>}
                 {<div className="list-group-conditions">
