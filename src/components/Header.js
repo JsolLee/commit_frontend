@@ -31,7 +31,7 @@ const Header = () => {
                             <ul className="sub-menu">
                                 <li><Link to="/News/IT">IT 이슈</Link></li>
                                 <li><Link to="/News/Company">국내기업</Link></li>
-                                <li><Link to="/News/International">대외 활동</Link></li>
+                                <li><Link to="/News/Conference">대외 활동</Link></li>
                             </ul>
                         )}
                         <Nav.Link className="main-menu"><Link to="/Job">채용정보</Link></Nav.Link>

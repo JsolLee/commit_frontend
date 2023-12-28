@@ -1,0 +1,43 @@
+.main {
+    display: flex;
+    position: relative;
+    max-width: 1340px;
+    margin: 20px auto;
+    justify-content: center
+}
+
+.middle {}
+
+.img1 {
+    width: 100%;
+
+}
+
+.left {
+    margin-right: 20px;
+    
+}
+
+.left1 {
+    margin-bottom: 1.2rem;
+}
+
+.left2 {}
+
+.right {
+    margin-left: 20px;
+}
+
+.right1 {
+    margin-bottom: 1.2rem;
+}
+
+.right2 {}
+
+.video {
+    margin: 10px;
+}
+
+.middle {
+    border: 0px;
+}

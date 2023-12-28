@@ -1,0 +1,61 @@
+
+#interested_company {
+    border: 1px solid #0D6EFD;
+    
+    background-color: white;
+    
+    color: #0D6EFD;
+    
+}
+
+#view {
+    border: none;
+    background-color: white;
+    color: inherit;
+}
+
+#btn_share {
+    border: none;
+    background-color: white;
+    color: inherit;
+}
+
+#btn_report {
+    border: none;
+    background-color: white;
+    color: inherit;
+}
+
+#btn_share:hover {
+    color: #0D6EFD;
+}
+
+#btn_report:hover {
+    color: red;
+}
+
+#map {
+    width: auto;
+    height: 350px;
+    position: relative;
+}
+
+#copy {
+    border: none;
+    background-color: white;
+    color: #0D6EFD;
+}
+
+
+th.p-1,
+td.p-1 {
+    border-bottom: none;
+}
+
+#share:hover {
+    color: #0d6efd;
+}
+
+#report:hover {
+    color: rgb(255, 35, 35);
+}
