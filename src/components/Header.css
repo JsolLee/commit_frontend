@@ -1,11 +1,11 @@
-.main-menu{
+.header .main-menu{
     font-size: 16px;
 }
-.main-menu a {
+.header .main-menu a {
     font-weight: bold;
     text-decoration: none;
 }
-.sub-menu {
+.header .sub-menu {
     display: flex;
     position: absolute;
     /*서브 메뉴를 절대위치로 설정하여 부모요소로부터 독립*/
@@ -19,27 +19,27 @@
     z-index: 10;
     
 }
-.sub-menu a{
+.header .sub-menu a{
     text-decoration: none;
     color: #92BEFE;
 }
-.sub-menu li {
+.header .sub-menu li {
     padding : 0 10px;
     margin-bottom: 5px;
 
 }
-.sub-menu li:last-child {
+.header .sub-menu li:last-child {
     margin-bottom: 0;
 }
 
 @media screen and (max-width: 992px) {
-    .sub-menu {
+    .header .sub-menu {
         position: static;
         margin-left: 0;
         flex-direction: column; /*세로로*/
     }
 
-    .main-menu li:hover .sub-menu {
+    .header .main-menu li:hover .sub-menu {
         display: block;
     }
 }
