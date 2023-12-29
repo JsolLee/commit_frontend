@@ -15,17 +15,16 @@ const Job = () => {
   const sort = ['등록일순', '마감일순'];
 
   const [data, setData] = useState([
-    { companyName: '' },
+    { companyname: '' },
     { title: '' },
-    { carrer: '' },
-    { background: '' },
-    { loc: '' },
-    { upToDate: '' },
-    { siteUrl: '' }
+    { career: '' },
+    { degree: '' },
+    { location: '' },
+    { finishDate: '' }
   ]);
 
   useEffect(() => {
-    axios.get('/job')
+    axios.get('/Job')
       .then(res => {
         setData(res.data);
       })
@@ -128,14 +127,14 @@ const Job = () => {
           <ul className="list-group list-group-flush">
             {data.map((lists) => (
               <li key={`${lists}`}className="list-group-item list-group-li">
-                {<div className="list-group-company"><a>{lists.companyName}</a></div>}
-                {<div className="list-group-title"><a>{lists.title}</a></div>}
+                {<div className="list-group-company"><a>{lists.companyname}</a></div>}
+                {<div className="list-group-title"><Link to={'/JobView'}>{lists.title}</Link></div>}
                 {<div className="list-group-conditions">
-                  <Link to={'/JobView'}>채용 상세 이동{lists.background}</Link>
-                  <a>{lists.carrer}</a>
-                  <a>{lists.loc}</a>
+                  <a>{lists.degree}</a>
+                  <a>{lists.career}</a>
+                  <a>{lists.location}</a>
                 </div>}
-                {<div className="list-group-upToDate"><a>{lists.upToDate}</a></div>}
+                {<div className="list-group-upToDate"><a>{lists.finishDate}</a></div>}
               </li>
             ))
             }
