@@ -162,7 +162,7 @@ class BoardList extends Component {
                             </tbody>
                         </Table>
                         <div className="d-flex justify-content-end mt-3">
-                            <Link to="/Community/boardwrite">
+                            <Link to="/Community/boardwirte">
                                 <Button variant="primary">글쓰기</Button><br></br><br></br>
                             </Link>
                         </div>

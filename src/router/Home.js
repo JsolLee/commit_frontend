@@ -35,6 +35,7 @@ function Home() {
                                 커뮤니티
                             </div>
                         </Link>
+
                     </div>
                 </div>
                 <div className="logo">

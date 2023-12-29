@@ -8,7 +8,7 @@ const use_Get_News = (N_IDX) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:8089/news/${N_IDX}`)
+    axios.get(`http://localhost:9999/news/${N_IDX}`)
       .then(response => {
         setData(response.data);
         setLoading(false);

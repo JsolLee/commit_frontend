@@ -6,6 +6,7 @@ import { Container, Nav, Navbar, NavDropdown, Form, Button } from 'react-bootstr
 // import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Pagination from '../../components/js/Pagination';
 import "./Job.css";
+import { Link } from 'react-router-dom';
 
 const Job = () => {
   const degree = ['학력 무관', '고졸', '초대졸', '대졸', '대학원 이상'];
@@ -130,7 +131,7 @@ const Job = () => {
                 {<div className="list-group-company"><a>{lists.companyName}</a></div>}
                 {<div className="list-group-title"><a>{lists.title}</a></div>}
                 {<div className="list-group-conditions">
-                  <a>{lists.background}</a>
+                  <Link to={'/JobView'}>채용 상세 이동{lists.background}</Link>
                   <a>{lists.carrer}</a>
                   <a>{lists.loc}</a>
                 </div>}
