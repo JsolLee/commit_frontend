@@ -15,12 +15,13 @@ const Job = () => {
   const sort = ['등록일순', '마감일순'];
 
   const [data, setData] = useState([
-    { companyname: '' },
     { title: '' },
     { career: '' },
     { degree: '' },
+    { companyname: '' },
     { location: '' },
-    { finishDate: '' }
+    { finishDate_S: '' },
+    { finishDate_D: '' }
   ]);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const Job = () => {
                   <a>{lists.career}</a>
                   <a>{lists.location}</a>
                 </div>}
-                {<div className="list-group-upToDate"><a>{lists.finishDate}</a></div>}
+                {<div className="list-group-upToDate"><a>~ {lists.finishDate_D=== null ? lists.finishDate_S : (new Date(lists.finishDate_D).toLocaleDateString('ko-KR'))}</a></div>}
               </li>
             ))
             }
