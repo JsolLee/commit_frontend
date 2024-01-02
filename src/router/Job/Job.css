@@ -44,11 +44,7 @@ section {
 	background-size: cover;
 }
 
-/*** Button ***/
-.btn {
-	transition: .5s;
-	font-weight: 500;
-}
+
 
 /*** Filter ***/
 .main-container .filter-wrap .d-flex .btn {
