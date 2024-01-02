@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 
 const News_acticle_title = ({ title }) => {
 
-News_acticle_title.propTypes = { title: PropTypes.string.isRequired }
+  News_acticle_title.propTypes = { title: PropTypes.string.isRequired }
 
   return (
     <article className="mb-3" id="news_view_title" name="news_view_title">
@@ -25,4 +25,5 @@ News_acticle_title.propTypes = { title: PropTypes.string.isRequired }
   )
 
 }
+
 export default News_acticle_title

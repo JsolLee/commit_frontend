@@ -9,15 +9,21 @@
 
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const News_acticle_summary = () => {
+const News_acticle_summary = ({ category, title }) => {
+
+  News_acticle_summary.propTypes = {
+    category: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }
 
   return (
     <article className="mb-4" id="news_view_origin" name="news_view_origin">
       <small>
-          <a href="#" className="text-muted">뉴스</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-muted">IT 이슈</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-primary">한국판 챗GPT 한국어 잘하는 AI...</a>
+          <a href="#" className="text-muted">News</a>&nbsp;❕&nbsp;
+          <a href="#" className="text-muted">{category}</a>&nbsp;❕&nbsp;
+          <a href="#" className="text-primary">{title}</a>
       </small>
     </article>
   )

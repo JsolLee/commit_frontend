@@ -11,30 +11,45 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const News_acticle_related = () => {
+const News_acticle_related = ({ relatedNews }) => {
+
+  if (!Array.isArray(relatedNews)) { return <div>관련 뉴스 정보가 없습니다.</div> }
 
   return (
-      <article className="container" id="news_view_related" name="news_view_related">
-        <section>
-          <div className="row row-cols-1 row-cols-md-3 g-6 gy-4">
-            <div>
-              {/* <div className="col" style=" cursor: pointer;" onclick="location.href='#'"> */}
+    <article className="container" id="news_view_related" name="news_view_related">
+      <section>
+        <div className="row row-cols-1 row-cols-md-3 g-6 gy-4">
+          {relatedNews.map((news, index) => (
+            <div key={index} className="col">
               <div className="card">
-                {/* <img src="../../assets/images/issue_veiw_card_1.gif" className="card-img-top" alt="Goolge"></img> */}
+                {/* {news.image && <img src={news.image} className="card-img-top" alt={news.title} />} */}
                 <div className="card-body">
-                  <h5 className="card-title">구글 어시스턴트, 더 똑똑해진다…“생성형 AI ‘바드’ 탑재”</h5>
-                  <p className="card-text">불과 몇 주 전 아마존이 생성형 AI 기능을 갖춘 새 알렉사를 선보인 데 이어, 구글도 구글 어시스턴트에 생성형 AI 기능을 제공한다고 밝혔다.  구글이 10월 4일(현지 시각) 미국 뉴욕에서 열린 연례 신제품 발표 행사 메이드 포 구글(M...</p>
+                  <h5 className="card-title">{news.title}</h5>
+                  <p className="card-text">{news.content}</p>
                 </div>
                 <div className="card-footer">
-                  <small className="text-body-secondary">추천기사</small>
+                  <small className="text-body-secondary">기사 보기</small>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </article>
+          ))}
+        </div>
+      </section>
+    </article>
   )
+}
+
+News_acticle_related.propTypes = {
+  relatedNews: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string,
+      // image: PropTypes.string,
+      // link: PropTypes.string 
+    })
+  ).isRequired
 }
 
 export default News_acticle_related

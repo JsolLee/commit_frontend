@@ -17,20 +17,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const News_acticle_source = ({ press, reporter, post_time }) => {
+const News_acticle_source = ({ origin, writer, originDate }) => {
 
   News_acticle_source.propTypes = {
-    press: PropTypes.string.isRequired,
-    reporter: PropTypes.string.isRequired,
-    post_time: PropTypes.string.isRequired
+    origin: PropTypes.string.isRequired,
+    writer: PropTypes.string.isRequired,
+    originDate: PropTypes.string.isRequired
   }
 
   return (
     <article className="mb-4" id="news_view_source" name="news_view_source">
       <small>
-          <a href="#" className="text-muted">{post_time}</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-muted">{press}</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-primary">{reporter} 기자</a>
+          <a href="#" className="text-muted">{originDate}</a>&nbsp;❕&nbsp;
+          <a href="#" className="text-muted">{origin}</a>&nbsp;❕&nbsp;
+          <a href="#" className="text-primary">{writer} 기자</a>
       </small>
     </article>
   )

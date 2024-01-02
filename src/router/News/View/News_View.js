@@ -2,19 +2,17 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // hooks
-// 임시 주석
-// import use_Get_News from './hooks/use_Get_News.js'
+import use_Get_News from './hooks/use_Get_News.js'
 
 // 양쪽 사이드바 = 왼쪽 : 키워드 추천 || 오른쪽 : 공유, 좋아요, 스크랩, 신고
 import News_acticle_keyword from './news_view/News_acticle_keyword.js'
 import News_acticle_action from './news_view/News_acticle_action.js'
 
 // 뉴스 내용 및 정보
-// 임시 주석
-// import News_acticle_title from './news_view/News_acticle_title.js'
-// import News_acticle_subtitle from './news_view/News_acticle_subtitle.js'
-// import News_acticle_source from './news_view/News_acticle_source.js'
-// import News_acticle_contents from './news_view/News_acticle_contents.js'
+import News_acticle_title from './news_view/News_acticle_title.js'
+import News_acticle_subtitle from './news_view/News_acticle_subtitle.js'
+import News_acticle_source from './news_view/News_acticle_source.js'
+import News_acticle_contents from './news_view/News_acticle_contents.js'
 import News_acticle_summary from './news_view/News_acticle_summary.js'
 
 // 관련 뉴스, 최신 뉴스, 인기 뉴스
@@ -28,13 +26,14 @@ import Comments from './comments/Comments.js';
 // Footer
 import Footer from './footer/Footer.js';
 
-const App = () => {
-  // 임시 주석
-  // const { data: newsData, loading, error } = use_Get_News(3);
+const News_View = () => {
+  const { data: newsData, loading, error } = use_Get_News(7);
 
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error fetching news: {error.message}</div>;
-  // if (!newsData) return <div>No data found</div>;
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error fetching news: {error.message}</div>
+  if (!newsData) return <div>No data found</div>
+
+  const { news, popularNews, latestNews, relatedNews } = newsData;
 
   return (
     <>
@@ -45,12 +44,11 @@ const App = () => {
           </div>
 
           <div className="col-md-10">
-            <News_acticle_summary />
-            {/* 임시 주석 */}
-            {/*<News_acticle_title title={newsData.N_TITLE} />
-            <News_acticle_subtitle subtitle={newsData.N_SUB_TITLE}/>
-            <News_acticle_contents />
-            <News_acticle_source press={newsData.N_ORIGIN} reporter={newsData.N_WRITER} post_time={newsData.N_ORIGIN_DATE}/>*/}
+            <News_acticle_summary category={news.category} title={news.title}/>
+            <News_acticle_title title={news.title} />
+            <News_acticle_subtitle subtitle={news.subtitle}/>
+            <News_acticle_contents image={news.image} content={news.content}/>
+            <News_acticle_source origin={news.origin} writer={news.writer} originDate={news.originDate}/>
           </div>
 
           <div className="col-md-1">
@@ -62,11 +60,11 @@ const App = () => {
       </main>
 
       <div className="container my-5">
-        <News_acticle_related />
+        <News_acticle_related relatedNews={relatedNews}/>
         <div className="row my-5">
           <hr /><hr />
-          <News_acticle_newest />
-          <News_acticle_popular />
+          <News_acticle_newest latestNews={latestNews} />
+          <News_acticle_popular popularNews={popularNews} />
         </div>
       </div>
       <Comments />
@@ -75,4 +73,4 @@ const App = () => {
   )
 }
 
-export default App
+export default News_View

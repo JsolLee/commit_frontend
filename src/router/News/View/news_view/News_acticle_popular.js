@@ -9,9 +9,10 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const News_acticle_popular = () => {
-
+const News_article_popular = ({ popularNews }) => {
+  
   return (
     <div className="col-md-6">
         <div className="table-responsive-md">
@@ -22,17 +23,25 @@ const News_acticle_popular = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                {/* <tr style="cursor: pointer;" onclick="location.href='#'"> */}
-                <th scope="row" className="col-2 text-center">1</th>
-                <td className="col-10">과기부, 챗GPT에 의한 디지털 대응 &apos;디지털 신질서 로드맵&apos; 만든다</td>
-              </tr>
+              {popularNews.map((news, index) => (
+                <tr key={index}>
+                  <th scope="row" className="col-2 text-center">{index + 1}</th>
+                  <td className="col-10">{news.title}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
     </div>
   )
-
 }
 
-export default News_acticle_popular
+News_article_popular.propTypes = {
+  popularNews: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired
+    })
+  ).isRequired
+}
+
+export default News_article_popular

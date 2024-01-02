@@ -16,9 +16,7 @@ import PropTypes from 'prop-types'
 
 const News_acticle_subtitle = ({ subtitle }) => {
 
-  News_acticle_subtitle.propTypes = {
-    subtitle: PropTypes.string.isRequired
-  }
+  News_acticle_subtitle.propTypes = { subtitle: PropTypes.string.isRequired }
 
   return (
     <article className="mb-4" id="news_view_subtitle" name="news_view_subtitle">

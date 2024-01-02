@@ -9,8 +9,9 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const News_acticle_newest = () => {
+const News_acticle_newest = ({ latestNews }) => {
 
   return (
       <div className="col-md-6">
@@ -22,17 +23,26 @@ const News_acticle_newest = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                {/* <tr style="cursor: pointer;" onclick="location.href='#'"> */}
-                <th scope="row" className="col-2 text-center">1</th>
-                <td className="col-10">뉴스 기사 제목</td>
-              </tr>
+              {latestNews.map((news, index) => (
+                <tr key={index}>
+                  <th scope="row" className="col-2 text-center">{index + 1}</th>
+                  <td className="col-10">{news.title}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
   )
 
+}
+
+News_acticle_newest.propTypes = {
+  latestNews: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired
+    })
+  ).isRequired
 }
 
 export default News_acticle_newest
