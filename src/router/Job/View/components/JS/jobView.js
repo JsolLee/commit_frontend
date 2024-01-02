@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, ToggleButton, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
-import { FaRegHeart, FaHeart, FaDiscord, FaInstagram, FaFacebook, FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
+import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
+import { FaDiscord, FaInstagram, FaFacebook, FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
 import { IoWarningOutline, IoShareSocialOutline } from 'react-icons/io5';
 import { BsPeopleFill } from 'react-icons/bs';
 import "../CSS/jobView.css";
@@ -13,7 +13,7 @@ const options = {
 };
 
 function jobView() {
-  const [followed, setFollowed] = useState(false);
+  
   const [scraped, setScraped] = useState(false);
   const [show, setShow] = useState(false);
   const companyAddressRef = useRef(null);
@@ -30,9 +30,7 @@ function jobView() {
     }
   };
 
-  const handleFollowToggle = () => {
-    setFollowed(!followed);
-  };
+  
 
   const handleScrapToggle = () => {
     setScraped(!scraped);
@@ -83,26 +81,7 @@ function jobView() {
             <Row className='align-items-center'>
               <Col className='pb-1'>
                 <span>(주)진솔</span>
-                <ToggleButton
-                  className='ms-2'
-                  id='toggle-check'
-                  type='checkbox'
-                  variant='outline-primary'
-                  checked={followed}
-                  value='follow'
-                  onChange={handleFollowToggle}
-                  size='sm'
-                >
-                  {followed ? (
-                    <>
-                      <FaHeart className='mb-1' /> 팔로잉
-                    </>
-                  ) : (
-                    <>
-                      <FaRegHeart className='mb-1' /> 팔로우
-                    </>
-                  )}
-                </ToggleButton>
+                
               </Col>
             </Row>
           </Col>

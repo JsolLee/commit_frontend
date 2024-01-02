@@ -22,7 +22,7 @@ const News_main = () => {
       <Routes>
         <Route path="/" element={<Job />} />
 
-        <Route path="/User_check" element={<JobView/>} />
+        <Route path="/JobView" element={<JobView/>} />
       </Routes>
     </div>
   );

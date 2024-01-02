@@ -20,7 +20,7 @@ function Iusse() {
 
             <h3 className="fw-bold">IT 이슈</h3>
             <h2 className="pb-2 border-bottom"></h2>
-            <Link to='/newView1' className="list-group-item list-group-item-action">
+            <Link to='/newView1' className="list-group-item list-group-item-action row-parent">
               <div className="row row-cols-1 align-items-md-center g-5 py-5">
                 <div className="d-flex flex-column align-items-start gap-2">
                   <img src={image01} width="1200" height="500" className="img-thumbnail" alt="뉴스1 썸네일" /> <br />

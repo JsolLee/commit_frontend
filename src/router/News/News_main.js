@@ -8,10 +8,10 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Main
-import News from './Main/JS/News';
+import News from './Main/News';
 
 // View
-import NewsView from './View/NewsView'
+import NewsView from './View/News_View'
 
 // List
 import Conference from './List/components/Conference';
@@ -26,8 +26,6 @@ const News_main = () => {
     <div>
       <Routes>
         <Route path="/" element={<News />} />
-        <Route path="/User_check" element />
-        <Route path="/Name_edit" element />
 
         <Route path="/IT" element={<Issue />} />
         <Route path="/Company" element={<Company />} />
