@@ -25,13 +25,22 @@ const Job = () => {
     { id : ''}
   ]);
 
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
+
   useEffect(() => {
-    axios.get('/Job')
+    axios.get(`/Job?page=${page}`)
       .then(res => {
-        setData(res.data);
+        setData(res.data.content);
+        setTotalPages(res.data.totalPages);
       })
       .catch(err => console.log(err))
-  }, []);
+  }, [page]);
+
+  const changePage = (pageNumber) => {
+    setPage(pageNumber);
+  }
 
   console.log(data)
 
@@ -145,7 +154,7 @@ const Job = () => {
           </ul>
         </div>
       </div>
-      <Pagination />
+      <Pagination totalPages={totalPages} currentPage={page} changePage={changePage}/>
     </div>
   );
 }
