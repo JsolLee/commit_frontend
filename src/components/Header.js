@@ -54,8 +54,8 @@ const Header = () => {
                         )}
                     </Nav>
                     <Nav>
-                        <Nav.Link><Link to='login'>로그인</Link></Nav.Link>
-                        <Nav.Link><Link to='join'>회원가입</Link></Nav.Link>
+                        <Nav.Link href="login">로그인</Nav.Link>
+                        <Nav.Link href="join">회원가입</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

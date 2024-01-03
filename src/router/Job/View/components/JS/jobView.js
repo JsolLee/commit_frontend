@@ -1,8 +1,6 @@
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
-import { FaDiscord, FaInstagram, FaFacebook, FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
+import { Container, Row, Col, ToggleButton, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
+import { FaRegHeart, FaHeart, FaDiscord, FaInstagram, FaFacebook, FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
 import { IoWarningOutline, IoShareSocialOutline } from 'react-icons/io5';
 import { BsPeopleFill } from 'react-icons/bs';
 import "../CSS/jobView.css";
@@ -15,33 +13,7 @@ const options = {
 };
 
 function jobView() {
-
-  // db 값
-  const [data, setData] = useState([
-    { id : ''},
-    { title: '' },
-    { career: '' },
-    { degree: '' },
-    { companyname: '' },
-    { location: '' },
-    { finishDate_S: '' },
-    { finishDate_D: '' }
-  ]);
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    axios.get(`/Job/JobView/${id}`)
-      .then(res => {
-        setData(res.data);
-      })
-      .catch(err => console.log(err))
-  }, []);
-
-  console.log(data)
-
-  // 카카오 api
-
+  const [followed, setFollowed] = useState(false);
   const [scraped, setScraped] = useState(false);
   const [show, setShow] = useState(false);
   const companyAddressRef = useRef(null);
@@ -58,7 +30,9 @@ function jobView() {
     }
   };
 
-
+  const handleFollowToggle = () => {
+    setFollowed(!followed);
+  };
 
   const handleScrapToggle = () => {
     setScraped(!scraped);
@@ -108,13 +82,33 @@ function jobView() {
           <Col>
             <Row className='align-items-center'>
               <Col className='pb-1'>
-                <div><a>{data.companyname}</a></div>
+                <span>(주)진솔</span>
+                <ToggleButton
+                  className='ms-2'
+                  id='toggle-check'
+                  type='checkbox'
+                  variant='outline-primary'
+                  checked={followed}
+                  value='follow'
+                  onChange={handleFollowToggle}
+                  size='sm'
+                >
+                  {followed ? (
+                    <>
+                      <FaHeart className='mb-1' /> 팔로잉
+                    </>
+                  ) : (
+                    <>
+                      <FaRegHeart className='mb-1' /> 팔로우
+                    </>
+                  )}
+                </ToggleButton>
               </Col>
             </Row>
           </Col>
         </Row>
         <Row>
-          <Col className='fs-1'><div>{data.title}</div></Col>
+          <Col className='fs-1'>진솔컴퍼니 프론트 개발자 채용</Col>
         </Row>
         <Row xs='auto' className='position-absolute end-0 text-secondary'>
           <Col>
@@ -184,8 +178,8 @@ function jobView() {
                 <tr><th className='fs-4 p-1'>지원 자격</th></tr>
               </thead>
               <tbody>
-                <tr><td className='p-1 ps-3'>경  력 : {data.career}</td></tr>
-                <tr><td className='p-1 ps-3'>학  력 : {data.degree}</td></tr>
+                <tr><td className='p-1 ps-3'>경  력 : 신입</td></tr>
+                <tr><td className='p-1 ps-3'>학  력 : 초대졸 이상</td></tr>
                 <tr><td className='p-1 ps-3'>핵심역량 : React, Vue, Node</td></tr>
               </tbody>
             </Table>
@@ -200,7 +194,7 @@ function jobView() {
                 <tr><td className='p-1 ps-3'>급  여 : 면접 후 결정</td></tr>
                 <tr>
                   <td className='p-1 ps-3'>
-                    지  역 : {data.location} <a href='#Company'><Badge bg="secondary">지도 &gt;</Badge></a>
+                    지  역 : 서울특별시 강남구 <a href='#Company'><Badge bg="secondary">지도 &gt;</Badge></a>
                   </td>
                 </tr>
               </tbody>
@@ -234,7 +228,7 @@ function jobView() {
       ></div>
 
       <Alert key="primary" variant="primary" className='text-center'>
-        <FaCalendar className='mb-1' /> 공고 기한 : ~ 
+        <FaCalendar className='mb-1' /> 공고 기한 : 2023.12.01 ~ 2023.12.31
       </Alert>
 
 
@@ -248,14 +242,14 @@ function jobView() {
               <Col>
                 <Card.Text className='ms-3'>
                   <Row><Col>회  사</Col></Row>
-                  <Row className='ms-1'><Col> - {data.companyname} </Col></Row>
+                  <Row className='ms-1'><Col> - 진솔 컴퍼니</Col></Row>
                   <Row><Col>규  모</Col></Row>
                   <Row className='ms-1'><Col> - 중소기업</Col></Row>
                   <Row><Col>email </Col></Row>
                   <Row className='ms-1'><Col> - realBrush@naver.com</Col></Row>
                   <Row><Col>주  소 </Col></Row>
                   <Row className='ms-1'>
-                    <Col ref={companyAddressRef}> - {data.location} <FaRegCopy onClick={handleCopyAddress} /></Col>
+                    <Col ref={companyAddressRef}> - 서울특별시 강남구 테헤란로 124 삼원타워 <FaRegCopy onClick={handleCopyAddress} /></Col>
                   </Row>
                 </Card.Text>
               </Col>
@@ -266,7 +260,7 @@ function jobView() {
           </Card.Body>
         </Card>
       </Container>
-
+      
     </Container>
 
   );

@@ -12,26 +12,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const News_article_popular = ({ popularNews }) => {
-  
+
   return (
     <div className="col-md-6">
-        <div className="table-responsive-md">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">인기뉴스</th>
+      <div className="table-responsive-md">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">인기뉴스</th>
+            </tr>
+          </thead>
+          <tbody>
+            {popularNews.map((news, index) => (
+              <tr key={index}>
+                <th scope="row" className="col-2 text-center">{index + 1}</th>
+                <td className="col-10">{news.title}</td>
               </tr>
-            </thead>
-            <tbody>
-              {popularNews.map((news, index) => (
-                <tr key={index}>
-                  <th scope="row" className="col-2 text-center">{index + 1}</th>
-                  <td className="col-10">{news.title}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

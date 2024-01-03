@@ -1,9 +1,0 @@
-diff a/src/router/Job/Job.js b/src/router/Job/Job.js	(rejected hunks)
-@@ -6,6 +6,7 @@
- // import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
- import Pagination from '../../components/js/Pagination';
- import "./Job.css";
-+import { Link } from 'react-router-dom';
- 
- const Job = () => {
-   const degree = ['학력 무관', '고졸', '초대졸', '대졸', '대학원 이상'];

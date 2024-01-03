@@ -11,6 +11,8 @@ import FindIdOk from "./router/Member/findidok";
 import FindPw from "./router/Member/findpw";
 import Job_main from "./router/Job/Job_main";
 
+import JobView from './router/Job/View/components/JS/jobView';
+
 
 function App() {
   return (
@@ -27,6 +29,12 @@ function App() {
         <Route path="/Findidok" element={<FindIdOk />} />
         <Route path="/Findpw" element={<FindPw />} />
       </Routes>
+
+      {/* 채용 뷰 */}
+      <Routes>
+        <Route path='/JobView' element={<JobView />} />
+      </Routes>
+
     </div>
 
   );

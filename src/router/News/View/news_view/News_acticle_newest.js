@@ -14,25 +14,25 @@ import PropTypes from 'prop-types'
 const News_acticle_newest = ({ latestNews }) => {
 
   return (
-      <div className="col-md-6">
-        <div className="table-responsive-md">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">최신뉴스</th>
+    <div className="col-md-6">
+      <div className="table-responsive-md">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">최신뉴스</th>
+            </tr>
+          </thead>
+          <tbody>
+            {latestNews.map((news, index) => (
+              <tr key={index}>
+                <th scope="row" className="col-2 text-center">{index + 1}</th>
+                <td className="col-10">{news.title}</td>
               </tr>
-            </thead>
-            <tbody>
-              {latestNews.map((news, index) => (
-                <tr key={index}>
-                  <th scope="row" className="col-2 text-center">{index + 1}</th>
-                  <td className="col-10">{news.title}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
   )
 
 }
