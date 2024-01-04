@@ -34,7 +34,7 @@ function Join() {
         nickName : nickName
       });
       if(response.status === 200) {
-        navigate('login');
+        navigate('/login');
       }
       console.log(response.data);
     } catch (error) {
@@ -49,22 +49,22 @@ function Join() {
         <br />
         <Form.Group controlId="formGroupId">
           <Form.Label>아이디</Form.Label>
-          <Form.Control type="text" placeholder="아이디를 입력하세요." onChange={e => setMemberId(e.target.value)} />
+          <Form.Control type="text" placeholder="아이디를 입력하세요." onChange={e => setMemberId(e.target.value)} required/>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>비밀번호</Form.Label>
-          <Form.Control type="password" placeholder="비밀번호를 입력하세요." onChange={e => setMemberPw(e.target.value)} />
+          <Form.Control type="password" placeholder="비밀번호를 입력하세요." onChange={e => setMemberPw(e.target.value)} required/>
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
           <Form.Label>이메일</Form.Label>
-          <Form.Control type="email" placeholder="이메일을 입력하세요." onChange={e => setEmail(e.target.value)} />
+          <Form.Control type="email" placeholder="이메일을 입력하세요." onChange={e => setEmail(e.target.value)} required/>
         </Form.Group>
 
         <Form.Group controlId="formBasicNickName">
           <Form.Label>닉네임</Form.Label>
-          <Form.Control type="text" placeholder="닉네임을 입력하세요." onChange={e => setNickName(e.target.value)} />
+          <Form.Control type="text" placeholder="닉네임을 입력하세요." onChange={e => setNickName(e.target.value)} required/>
         </Form.Group>
         <br />
         <Button variant="primary" type="submit">

@@ -1,39 +1,76 @@
 import React, {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import {Link, useNavigate} from 'react-router-dom';
+import {Form, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
-  const [validated, setValidated] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      navigate("/");
+  const [memberId, setMemberId] = useState("");
+  const [memberPw, setMemberPw] = useState("");
+  //const navigate = useNavigate();
+  /*
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(!memberId || !memberPw){
+      alert("모든 필드를 채워주세요.");
+      return;
     }
 
-    setValidated(true);  
+    try{
+      const response = await axios.post('/Login',{
+        memberId : memberId,
+        memberPw : memberPw
+      });
+      if(response.status === 200) {
+        console.log(memberId);
+        console.log(memberPw);
+        sessionStorage.setItem("memberId", memberId);
+        sessionStorage.setItem("nickName", response.data.nickName);
+        document.location.href = "/";
+      }
+      console.log(response.data);
+    } catch(error){
+      console.error(error);
+    } 
   };
-  
+  */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(!memberId || !memberPw){
+      alert("모든 필드를 채워주세요.");
+      return;
+    }
+
+    axios.post('/Login', {
+      memberId : memberId,
+      memberPw : memberPw
+    })
+    .then(response => {
+      if(response.status === 200) {
+        console.log(memberId);
+        console.log(memberPw);
+        document.location.href = "/";
+      }
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
   return (
     <div className="Login member">
-      <Form className='login' noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form className='login' method='PoST' action='/Login' onSubmit={handleSubmit}>
         <h1 className='text-center'>로그인</h1>
         <br />
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>아이디</Form.Label>
-          <Form.Control type="text" placeholder="아이디를 입력해주세요." required/>
+          <Form.Control type="text" placeholder="아이디를 입력해주세요." onChange={e => setMemberId(e.target.value)} required/>
           <Form.Control.Feedback type="invalid">
               아이디를 입력해주세요.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formGroupPassword">
           <Form.Label>비밀번호</Form.Label>
-          <Form.Control type="password" placeholder="비밀번호를 입력해주세요." required/>
+          <Form.Control type="password" placeholder="비밀번호를 입력해주세요." onChange={e => setMemberPw(e.target.value)} required/>
           <Form.Control.Feedback type="invalid">
               비밀번호를 입력해주세요.
           </Form.Control.Feedback>
@@ -43,9 +80,9 @@ function Login() {
           로그인
         </Button>
         <Form.Group className='text-center link'>
-        <Link to='/join'>회원가입 | </Link>
-        <Link to='/findid'>아이디 찾기 | </Link>
-        <Link to='/findpw'>비밀번호 찾기 </Link>
+        <Link to='/join'> 회원가입 | </Link>
+        <Link to='/findid'> 아이디 찾기 | </Link>
+        <Link to='/findpw'> 비밀번호 찾기 </Link>
         </Form.Group>
       </Form>
     </div>
