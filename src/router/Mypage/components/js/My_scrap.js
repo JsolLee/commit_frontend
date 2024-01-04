@@ -45,7 +45,7 @@ const My_scrap = () => {
         </ButtonGroup>
       </div>
 
-      <button type="button" className="btn btn-outline-danger">삭제</button>
+      <button type="button" className="delete btn btn-outline-danger">삭제</button>
 
       {/* 뉴스 목록 */}
       <div className={`${radioId === 'news' ? `scrap-news-list` : 'scrap-news-list group-hidden'}`}>

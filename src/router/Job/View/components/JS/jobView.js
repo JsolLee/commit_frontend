@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
@@ -9,23 +10,20 @@ import "../CSS/jobView.css";
 
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b9db355519fa67ef41f4ffe1d442d564&libraries=services"></script>
 
-const options = {
-  center: new window.kakao.maps.LatLng(37.498832, 127.031755),
-  level: 3,
-};
-
 function jobView() {
 
   // db 값
   const [data, setData] = useState([
-    { id : ''},
+    { id: '' },
     { title: '' },
     { career: '' },
     { degree: '' },
     { companyname: '' },
     { location: '' },
     { finishDate_S: '' },
-    { finishDate_D: '' }
+    { finishDate_D: '' },
+    { finishDate: '' },
+    { example: '서울 관악구 신림로67길 25' }
   ]);
 
   const { id } = useParams();
@@ -87,19 +85,74 @@ function jobView() {
     }
   };
 
-  const container = useRef(null);
-
   useEffect(() => {
-    const map = new window.kakao.maps.Map(container.current, options);
+    // 스크립트 로드
+    const script = document.createElement('script');
+    script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=b9db355519fa67ef41f4ffe1d442d564&libraries=services&autoload=false";
+    document.head.appendChild(script);
 
-    // 마커 추가
-    const markerPosition = new window.kakao.maps.LatLng(37.498832, 127.031755);
-    const marker = new window.kakao.maps.Marker({
-      position: markerPosition,
-    });
+    // 스크립트 로딩 완료 후 실행
+    script.onload = () => {
+      window.initKakaoMap();
+    }
 
-    marker.setMap(map);
-  }, []);
+    // 빈 의존성 배열은 마운트 후 한 번만 실행됨을 보장합니다.
+
+    console.log(data.location)
+
+    // 카카오 지도 초기화 및 생성 함수
+    window.initKakaoMap = () => {
+      var infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+
+      var mapContainer = document.getElementById('map'),
+        mapOption = {
+          center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+          level: 3
+        };
+
+      // 지도를 생성합니다    
+      var map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+      // 장소 검색 객체를 생성합니다
+      var ps = new window.kakao.maps.services.Places();
+
+      // 키워드로 장소를 검색합니다
+      console.log(data.location)
+      ps.keywordSearch(data.location, placesSearchCB);
+
+      // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+      function placesSearchCB(datas, status) {
+        if (status === window.kakao.maps.services.Status.OK) {
+          var bounds = new window.kakao.maps.LatLngBounds();
+
+          for (var i = 0; i < datas.length; i++) {
+            displayMarker(datas[i]);
+            bounds.extend(new window.kakao.maps.LatLng(datas[i].y, datas[i].x));
+          }
+
+          map.setBounds(bounds);
+        }
+      }
+
+      // 지도에 마커를 표시하는 함수입니다
+      function displayMarker(place) {
+        var marker = new window.kakao.maps.Marker({
+          map: map,
+          position: new window.kakao.maps.LatLng(place.y, place.x)
+        });
+
+        window.kakao.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+          infowindow.open(map, marker);
+        });
+      }
+    }
+  }, [data]);
+
+  // 채용 마감시간 설정
+  const formattedCreateDatetime = moment(data.createDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm");
+  const formattedFinishDatetime = data.finishDate ? moment(data.finishDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm") : null;
+
 
   return (
     <Container fluid>
@@ -234,7 +287,7 @@ function jobView() {
       ></div>
 
       <Alert key="primary" variant="primary" className='text-center'>
-        <FaCalendar className='mb-1' /> 공고 기한 : ~ 
+        <FaCalendar className='mb-1' /> 공고 기한 :  {formattedCreateDatetime} ~ {formattedFinishDatetime}
       </Alert>
 
 
@@ -260,7 +313,7 @@ function jobView() {
                 </Card.Text>
               </Col>
               <Col className='pb-3 pe-3'>
-                <div className="map" style={{ width: "400px", height: "250px" }} ref={container}></div>
+                <div className="map" style={{ width: "400px", height: "250px" }} id='map'></div>
               </Col>
             </Row>
           </Card.Body>

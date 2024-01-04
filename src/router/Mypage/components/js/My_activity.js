@@ -46,7 +46,7 @@ const My_activity = () => {
           </ButtonGroup>
         </div>
 
-        <button type="button" className="btn btn-outline-danger">삭제</button>
+        <button type="button" className="delete btn btn-outline-danger">삭제</button>
 
         {/* 내가 쓴 글 목록 */}
         <div className={`${radioId === 'my-content' ? `activity-content-list` : 'activity-content-list group-hidden'}`}>

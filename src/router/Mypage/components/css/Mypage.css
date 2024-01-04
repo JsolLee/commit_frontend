@@ -28,7 +28,7 @@ li{
 
 
 /* 리스트 삭제 버튼 */
-.btn-outline-danger{
+.delete.btn.btn-outline-danger{
   font-size: 14px;
   width: 58px;
   height: 30px;

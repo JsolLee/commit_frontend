@@ -43,7 +43,7 @@ const My_like = () => {
         </ButtonGroup>
       </div>
 
-      <button type="button" className="btn btn-outline-danger">삭제</button>
+      <button type="button" className="delete btn btn-outline-danger">삭제</button>
 
       {/* 내가 좋아하는 뉴스 목록 */}
       <div className={`${radioId === 'like-news' ? `like-news-list` : 'like-news-list group-hidden'}`}>
