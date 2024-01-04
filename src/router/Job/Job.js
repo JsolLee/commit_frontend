@@ -21,16 +21,28 @@ const Job = () => {
     { companyname: '' },
     { location: '' },
     { finishDate_S: '' },
-    { finishDate_D: '' }
+    { finishDate_D: '' },
+    { id : ''}
   ]);
 
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
+
   useEffect(() => {
-    axios.get('/Job')
+    axios.get(`/Job?page=${page}`)
       .then(res => {
-        setData(res.data);
+        setData(res.data.content);
+        setTotalPages(res.data.totalPages);
       })
       .catch(err => console.log(err))
-  }, []);
+  }, [page]);
+
+  const changePage = (pageNumber) => {
+    setPage(pageNumber);
+  }
+
+  console.log(data)
 
   return (
     <div>
@@ -129,7 +141,7 @@ const Job = () => {
             {data.map((lists) => (
               <li key={`${lists}`}className="list-group-item list-group-li">
                 {<div className="list-group-company"><a>{lists.companyname}</a></div>}
-                {<div className="list-group-title"><Link to={'/JobView'}>{lists.title}</Link></div>}
+                {<div className="list-group-title"><Link to={`JobView/${lists.id}`}>{lists.title}</Link></div>}
                 {<div className="list-group-conditions">
                   <a>{lists.degree}</a>
                   <a>{lists.career}</a>
@@ -142,7 +154,7 @@ const Job = () => {
           </ul>
         </div>
       </div>
-      <Pagination />
+      <Pagination totalPages={totalPages} currentPage={page} changePage={changePage}/>
     </div>
   );
 }
