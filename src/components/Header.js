@@ -115,13 +115,13 @@ const Header = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link className="main-menu" onClick={handleNewsSubMenuToggle}>
-                            <Link to="/News">뉴스</Link>
+                            <Link to="/news">뉴스</Link>
                         </Nav.Link>
                         {isNewsSubMenuOpen && (
                             <ul className="sub-menu">
-                                <li><Link to="/News/IT">IT 이슈</Link></li>
-                                <li><Link to="/News/Company">국내기업</Link></li>
-                                <li><Link to="/News/Conference">대외 활동</Link></li>
+                                <li><Link to="/news/category/infotech">IT 이슈</Link></li>
+                                <li><Link to="/news/category/company">국내기업</Link></li>
+                                <li><Link to="/news/category/conference">대외활동</Link></li>
                             </ul>
                         )}
                         <Nav.Link className="main-menu" onClick={handleJObSubMenuToggle}><Link to="/Job">채용정보</Link></Nav.Link>

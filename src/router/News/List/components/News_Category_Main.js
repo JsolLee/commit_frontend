@@ -1,12 +1,13 @@
 import React from 'react'
 
-const News_Issue_Main = ({ topNews }) => {
+const News_Category_Main = ({ topNews }) => {
 
+    console.log('Top News Data:', topNews)
     if (!topNews) { return <div>No top news found</div> }
 
     return (
         <>
-            <h3 className="fw-bold">IT 이슈</h3>
+            <h3 className="fw-bold">국내기업</h3>
             <h2 className="pb-2 border-bottom"></h2>
 
             <div className="list-group-item list-group-item-action">
@@ -21,4 +22,4 @@ const News_Issue_Main = ({ topNews }) => {
     )
 }
 
-export default News_Issue_Main
+export default News_Category_Main

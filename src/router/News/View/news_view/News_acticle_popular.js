@@ -13,6 +13,10 @@ import PropTypes from 'prop-types'
 
 const News_article_popular = ({ popularNews }) => {
 
+  if (!popularNews || !Array.isArray(popularNews)) {
+    return <div>Loading popular news...</div>;
+  }
+
   return (
     <div className="col-md-6">
       <div className="table-responsive-md">

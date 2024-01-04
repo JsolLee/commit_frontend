@@ -13,6 +13,10 @@ import PropTypes from 'prop-types'
 
 const News_acticle_newest = ({ latestNews }) => {
 
+  if (!latestNews || !Array.isArray(latestNews)) {
+    return <div>Loading latest news...</div>; 
+  }
+
   return (
     <div className="col-md-6">
       <div className="table-responsive-md">

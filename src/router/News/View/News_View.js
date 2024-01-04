@@ -2,7 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // hooks
-import use_Get_News from '../Main/hooks/use_Get_News.js'
+import { use_Get_News } from '../Main/hooks/use_Get_API.js';
 
 // 양쪽 사이드바 = 왼쪽 : 키워드 추천 || 오른쪽 : 공유, 좋아요, 스크랩, 신고
 import News_acticle_keyword from './news_view/News_acticle_keyword.js'
@@ -20,13 +20,7 @@ import News_acticle_related from './news_view/News_acticle_related.js'
 import News_acticle_newest from './news_view/News_acticle_newest.js'
 import News_acticle_popular from './news_view/News_acticle_popular.js'
 
-//Comments
-import Comments from './comments/Comments.js';
-
-// Footer
-import Footer from './footer/Footer.js';
-
-const NewsView = () => {
+const News_View = () => {
   const { data: newsData, loading, error } = use_Get_News(7);
 
   if (loading) return <div>Loading...</div>
@@ -67,10 +61,8 @@ const NewsView = () => {
           <News_acticle_popular popularNews={popularNews} />
         </div>
       </div>
-      <Comments />
-      <Footer />
     </>
   )
 }
 
-export default NewsView
+export default News_View
