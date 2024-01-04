@@ -11,17 +11,37 @@ const BoardWrite = () => {
   const [selectedCategory, setSelectedCategory] = useState('전체글');
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleTitleChange = (e) => {
+  const boardTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleCategoryChange = (selected) => {
+  const boardCategory = (selected) => {
     setSelectedCategory(selected);
   };
 
-  const handleUpdate = () => {
-    setShowAlert(true);
-
+  const boardWrite = async () => {
+    try {
+      const response = await fetch('http://localhost:9999/Community/boardwrite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          content,
+        }),
+      });
+  
+      if (response.ok) {
+        // 성공적으로 글이 등록되었을 때의 처리
+        setShowAlert(true);
+      } else {
+        // 실패했을 때의 처리
+        console.error('글 등록 실패');
+      }
+    } catch (error) {
+      console.error('에러 발생', error);
+    }
   };
 
   return (
@@ -37,7 +57,7 @@ const BoardWrite = () => {
         <Form>
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
-            <Form.Select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
+            <Form.Select value={selectedCategory} onChange={(e) => boardCategory(e.target.value)}>
               <option value="구인/구직">구인/구직</option>
               <option value="이직/신입">이직/신입</option>
               <option value="면접">면접</option>
@@ -48,7 +68,7 @@ const BoardWrite = () => {
 
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>제목</InputGroup.Text>
-            <Form.Control type="text" value={title} onChange={handleTitleChange} />
+            <Form.Control type="text" value={title} onChange={boardTitle} />
           </InputGroup>
 
           <FileUpload />
@@ -68,8 +88,9 @@ const BoardWrite = () => {
               )}
 
               <div className="d-flex justify-content-end">
+                
                 <Link to='/Community/boardlist'>
-                  <Button variant="primary" onClick={handleUpdate}>
+                  <Button variant="primary" onClick={boardWrite}>
                     등록
                   </Button>
                 </Link>

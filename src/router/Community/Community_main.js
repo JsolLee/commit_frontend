@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import Community from './Main/Community';
 
 // View
-import BoardDetails from './View/boarddetail'
+import BoardDetail from './View/boarddetail'
 import BoardEdit from './View/boardedit'
 import BoardWrite from './View/boardwrite'
 import FileUpload from './View/fileupload';
@@ -24,12 +24,10 @@ const Communit_main = () => {
         <div>
             <Routes>
                 <Route path='/' element={<Community/>} />
-
                 <Route path="/boardlist" element={<BoardList />} />
-
-                <Route path="/boardedit" element={<BoardEdit />} />
-                <Route path="/boardwirte" element={<BoardWrite />} />
-                <Route path="/boarddetail" element={<BoardDetails />} />
+                <Route path="/boardedit/:id" element={<BoardEdit />} />
+                <Route path="/boardwrite" element={<BoardWrite />} />
+                <Route path="/boarddetail/:id" element={<BoardDetail />} />
                 <Route path="/fileupload" element={<FileUpload />} />
             </Routes>
         </div>

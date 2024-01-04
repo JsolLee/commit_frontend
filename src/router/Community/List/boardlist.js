@@ -1,189 +1,111 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Component } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { InputGroup, FormControl, Dropdown, Container } from 'react-bootstrap';
 import { PeopleFill, HeartFill, Chat } from "react-bootstrap-icons";
 import { Link } from 'react-router-dom';
 import './boardlist.css'
-import Pagination from 'react-bootstrap/Pagination';
+import axios from 'axios';
 
+//상단 사진 부분
 const CommunityHeader = () => (
     <div className="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div className="container text-center py-5">
-          <h1 className="display-2 text-white fw-bold mb-4 animated slideInDown">Community</h1>
+            <h1 className="display-2 text-white fw-bold mb-4 animated slideInDown">Community</h1>
         </div>
-      </div>
-    // <div className="text-center position-relative">
-    //     <img src={communityImage} alt="Community" className="img-fluid" />
-    //     <h1 className="overlay-text">Community</h1>
-    //     <br></br><br></br>
-    // </div>
+    </div>
 );
 
-class BoardList extends Component {
+// 리엑트와 스프링부트 연결을 위한 코드
+const BoardList = () => {
+    // const [selectedCategory, setSelectedCategory] = useState('전체글');
+    const [boardList, setBoardList] = useState([]);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedCategory: '전체글',
-        };
+    useEffect(() => {
+        fetchBoardList();
+    }, []);
+
+    const fetchBoardList = async () => {
+        try {
+            const response = await axios.get('http://localhost:9999/Community/boardlist');
+            setBoardList(response.data);
+        } catch (error) {
+            console.error('Error fetching board list:', error);
+        }
     }
 
-    handleCategoryChange(selected) {
-        this.setState({ selectedCategory: selected });
-    }
+//실제 렌더링 되는 부분
+return (
+    <>
+    <CommunityHeader />            
+        <Container>
+        {/* 
+        <Breadcrumb>
+            <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+            <Breadcrumb.Item href="/Community">
+              Community
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>구인/구직</Breadcrumb.Item>
+        </Breadcrumb> */}
 
+        <div className="d-flex justify-content-between align-items-center mb-3">                
 
-    render() {
-        const { selectedCategory } = this.state;
-        return (
-            <>
-                <CommunityHeader />
-                <Container>
+            <Dropdown.Menu>
+                <Dropdown.Item eventKey="전체글">전체글</Dropdown.Item>
+                <Dropdown.Item eventKey="이직/신입">이직/신입</Dropdown.Item>
+                <Dropdown.Item eventKey="자소서">자소서</Dropdown.Item>
+                <Dropdown.Item eventKey="합격자조언">합격자조언</Dropdown.Item>
+                <Dropdown.Item eventKey="구인/구직">구인/구직</Dropdown.Item>
+            </Dropdown.Menu>
 
-                    <div>
-                        <br></br>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            {/* 카테고리 드롭다운 */}
-                            <Dropdown onSelect={this.handleCategoryChange.bind(this)}>
-                                <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-                                    {selectedCategory}
-                                </Dropdown.Toggle>
+            <InputGroup>
+                        <FormControl
+                            type="text"
+                            placeholder="검색어를 입력하세요"
+                        />
+                        <Button variant="primary" >검색</Button>
+            </InputGroup>
+        </div>
 
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey="전체글">전체글</Dropdown.Item>
-                                    <Dropdown.Item eventKey="이직/신입">이직/신입</Dropdown.Item>
-                                    <Dropdown.Item eventKey="자소서">자소서</Dropdown.Item>
-                                    <Dropdown.Item eventKey="합격자조언">합격자조언</Dropdown.Item>
-                                    <Dropdown.Item eventKey="구인/구직">구인/구직</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th className="text-center" style={{ fontSize: '25px' }}>번호</th>
+                    <th className="text-center" style={{ fontSize: '25px' }}>제목</th>
+                    <th className="text-center" style={{ fontSize: '25px' }}>작성자</th>
+                    <th className="text-center" style={{ fontSize: '25px' }}>작성일</th>
+                </tr>
+                </thead>
 
-                            {/* 검색창 */}
-                            <InputGroup>
-                                <FormControl
-                                    type="text"
-                                    placeholder="검색어를 입력하세요"
-                                />
-                                <Button variant="primary">검색</Button>
-                            </InputGroup>
-                        </div>
+                <tbody>
+                {boardList.map((board) => (
+                <tr key={board.id}>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{board.id}</td>
+                    <td className="text-center" style={{ fontSize: '20px' }}>
+                        <Link to={`/Community/boarddetail/${board.id}`} style={{ color: "black", textDecoration: "none" }}>
+                            {board.title}
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <PeopleFill className="me-2" />{board.viewcount}&nbsp;
+                            <HeartFill style={{ color: "red" }}></HeartFill>{board.likecount}&nbsp;
+                            <Chat></Chat>{board.comments}
+                        </Link>
+                    </td>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{board.membersId}</td>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{board.createDate}</td>
+                </tr>
+            ))}
+        </tbody>
+    </Table>
 
-
-                        {/* 리스트 */}
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th className="text-center" style={{ fontSize: '25px' }}>번호</th>
-                                    <th className="text-center" style={{ fontSize: '25px' }}>제목</th>
-                                    <th className="text-center" style={{ fontSize: '25px' }}>작성자</th>
-                                    <th className="text-center" style={{ fontSize: '25px' }}>작성일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>1</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none", }}>
-                                            게시글 1
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <PeopleFill className="me-2" />100&nbsp;
-                                            <HeartFill style={{ color: "red" }}></HeartFill>100&nbsp;
-                                            <Chat></Chat>100
-                                        </Link>
-                                    </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자1</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>2</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
-                                            게시글 2
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <PeopleFill className="me-2" />100&nbsp;
-                                            <HeartFill style={{ color: "red" }}></HeartFill>100&nbsp;
-                                            <Chat></Chat>100
-                                        </Link>
-                                    </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자2</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>3</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
-                                            게시글 3
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <PeopleFill className="me-2" />100&nbsp;
-                                            <HeartFill style={{ color: "red" }}></HeartFill>100&nbsp;
-                                            <Chat></Chat>100
-                                        </Link>
-                                    </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자3</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>4</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
-                                            게시글 4
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <PeopleFill className="me-2" />100&nbsp;
-                                            <HeartFill style={{ color: "red" }}></HeartFill>100&nbsp;
-                                            <Chat></Chat>100
-                                        </Link>
-                                    </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자4</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
-                                </tr>
-
-                                <tr>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>5</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>
-                                        <Link to='/Community/boarddetail' style={{ color: "black", textDecoration: "none" }}>
-                                            게시글 5
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <PeopleFill className="me-2" />100&nbsp;
-                                            <HeartFill style={{ color: "red" }}></HeartFill>100&nbsp;
-                                            <Chat></Chat>100
-                                        </Link>
-                                    </td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>작성자5</td>
-                                    <td className="text-center" style={{ fontSize: '20px' }}>24.01.01</td>
-                                </tr>
-
-                            </tbody>
-                        </Table>
-                        <div className="d-flex justify-content-end mt-3">
-                            <Link to="/Community/boardwirte">
-                                <Button variant="primary">글쓰기</Button><br></br><br></br>
-                            </Link>
-                        </div>
-                    </div>
-                </Container>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
-                <Pagination>
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item>{3}</Pagination.Item>                        
-                        <Pagination.Item>{4}</Pagination.Item>
-                        <Pagination.Item>{5}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
-                </Pagination>
-                </div>
-            </>
-        );
-    }
+    <div className="d-flex justify-content-end mt-3">
+        <Link to="/Community/boardwrite">
+            <Button variant="primary">글쓰기</Button>
+        </Link>
+    </div>            
+    </Container>
+</>
+);
 }
 
 export default BoardList;
