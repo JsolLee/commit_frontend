@@ -3,28 +3,35 @@ import axios from 'axios'
 
 const use_Get_API = (url) => {
     const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        setLoading(true)
-        axios.get(url)
-            .then(response => {
-                setData(response.data)
-                setLoading(false)
-            })
-            .catch(err => {
-                setError(err)
-                setLoading(false)
-            })
+        if (!url) {
+            setData(null)
+            setLoading(false)
+            setError(null)
+        } else {
+            setLoading(true)
+            axios.get(url)
+                .then(response => {
+                    setData(response.data)
+                    setLoading(false)
+                })
+                .catch(err => {
+                    setError(err)
+                    setLoading(false)
+                })
+        }
     }, [url])
 
     return { data, loading, error }
 }
 
 const use_Get_Category = (category) => {
-    const apiUrl = `http://localhost:9999/news/category/${category}`
-    const { data, loading, error } = use_Get_API(apiUrl)
+    const apiUrl = category ? `http://localhost:9999/news/category/${category}` : null
+    const { data, loading, error } = apiUrl ? use_Get_API(apiUrl) : { data: null, loading: false, error: null }
+    
     
     const topNews = data ? data.topNews : null
     const listNews = data ? data.listNews : []
@@ -35,7 +42,7 @@ const use_Get_Category = (category) => {
 }
 
 const use_Get_News = (id) => {
-    const apiUrl = id ? `http://localhost:9999/news/id/${id}` : null
+    const apiUrl = id ? `http://localhost:9999/news/article/${id}` : null
     const { data, loading, error } = apiUrl ? use_Get_API(apiUrl) : { data: null, loading: false, error: null }
     
     const news = data ? data.news : null

@@ -43,7 +43,10 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/news/*" element={<News_main />} />
+        <Route path="/news/*" element={<News_main />}>
+          <Route path="category/:category" element={<News_main />} />
+          <Route path="article/:id" element={<News_main />} />
+        </Route>
         <Route path="/Job/*" element={<Job_main />} />
         <Route path="/Community/*" element={<Community_main />} />
         <Route path="/Mypage/*" element={<Mypage_main />} />
