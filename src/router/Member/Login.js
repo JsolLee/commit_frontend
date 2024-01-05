@@ -18,11 +18,11 @@ function Login() {
       })
       .then((res) => {
         // moment는 날짜구하는 라이브러리 이며 1분후를 나타내고 expires의 타입이 date라서 마지막메소드로 치환해준다
-        const expires = moment().add('1', 'm').toDate();
+        const expires = moment().add('20', 'm').toDate();
         setCookie('id', res.data.memberId, { expires }); // 쿠키에 아이디 저장
         console.log('res : ', res);
         console.log(cookies);
-         document.location.href = "/";
+        document.location.href = "/";
       })
       .catch(error => {
         console.error(error);
