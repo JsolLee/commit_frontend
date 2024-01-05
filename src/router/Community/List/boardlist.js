@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { InputGroup, FormControl, Dropdown, Container } from 'react-bootstrap';
+import { InputGroup, FormControl, Dropdown, Container, Pagination } from 'react-bootstrap';
 import { PeopleFill, HeartFill, Chat } from "react-bootstrap-icons";
 import { Link } from 'react-router-dom';
 import './boardlist.css'
 import axios from 'axios';
+import moment from 'moment';
 
 //상단 사진 부분
 const CommunityHeader = () => (
@@ -19,35 +20,35 @@ const CommunityHeader = () => (
 
 // 리엑트와 스프링부트 연결을 위한 코드
 const BoardList = () => {
-    // const [selectedCategory, setSelectedCategory] = useState('전체글');
     const [boardList, setBoardList] = useState([]);
+    const [page, setPage] = useState(1); 
 
-    useEffect(() => {
-        fetchBoardList();
-    }, []);
-
-    const fetchBoardList = async () => {
+    const getBoardList = useCallback(async (pageNumber) => {
         try {
-            const response = await axios.get('http://localhost:9999/Community/boardlist');
-            setBoardList(response.data);
+            console.log(pageNumber)
+            const response = await axios.get(`http://localhost:9999/Community/boardlist?page=${pageNumber}`);
+            console.log(response.data.content)
+            setBoardList(response.data.content);
         } catch (error) {
-            console.error('Error fetching board list:', error);
+            console.error('에러 메세지', error);
         }
-    }
+    }, [page]);
+    
+    useEffect(() => {
+        getBoardList(page);
+    }, [page, getBoardList]);
+    
+    // 페이지 변경 처리 함수
+    const pageChange = (pageNumber) => {
+        setPage(pageNumber);
+    };
+
 
 //실제 렌더링 되는 부분
 return (
     <>
     <CommunityHeader />            
         <Container>
-        {/* 
-        <Breadcrumb>
-            <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-            <Breadcrumb.Item href="/Community">
-              Community
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>구인/구직</Breadcrumb.Item>
-        </Breadcrumb> */}
 
         <div className="d-flex justify-content-between align-items-center mb-3">                
 
@@ -79,20 +80,20 @@ return (
                 </thead>
 
                 <tbody>
-                {boardList.map((board) => (
-                <tr key={board.id}>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{board.id}</td>
+                {Array.isArray(boardList) && boardList.map((boardList) => (
+                <tr key={boardList.id}>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.id}</td>
                     <td className="text-center" style={{ fontSize: '20px' }}>
-                        <Link to={`/Community/boarddetail/${board.id}`} style={{ color: "black", textDecoration: "none" }}>
-                            {board.title}
+                        <Link to={`/Community/boarddetail/${boardList.id}`} style={{ color: "black", textDecoration: "none" }}>
+                            {boardList.title}
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <PeopleFill className="me-2" />{board.viewcount}&nbsp;
-                            <HeartFill style={{ color: "red" }}></HeartFill>{board.likecount}&nbsp;
-                            <Chat></Chat>{board.comments}
+                            <PeopleFill className="me-2" />{boardList.viewcount}&nbsp;
+                            <HeartFill style={{ color: "red" }}></HeartFill>{boardList.likecount}&nbsp;
+                            <Chat></Chat>{boardList.comments}
                         </Link>
                     </td>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{board.membersId}</td>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{board.createDate}</td>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.membersId}</td>
+                    <td className="text-center" style={{ fontSize: '20px' }}>{moment(boardList.createDate).format('YYYY-MM-DD')}</td>
                 </tr>
             ))}
         </tbody>
@@ -104,6 +105,18 @@ return (
         </Link>
     </div>            
     </Container>
+
+    <div className="d-flex justify-content-center">
+        <Pagination>
+            <Pagination.Prev onClick={() => pageChange(page - 1)} />
+            <Pagination.Item onClick={() => pageChange(1)}>{1}</Pagination.Item>
+            <Pagination.Item onClick={() => pageChange(2)}>{2}</Pagination.Item>
+            <Pagination.Item onClick={() => pageChange(3)}>{3}</Pagination.Item>
+            <Pagination.Item onClick={() => pageChange(4)}>{4}</Pagination.Item>
+            <Pagination.Item onClick={() => pageChange(5)}>{5}</Pagination.Item>
+            <Pagination.Next onClick={() => pageChange(page + 1)} />
+        </Pagination>
+    </div>
 </>
 );
 }

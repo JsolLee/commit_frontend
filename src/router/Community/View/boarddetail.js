@@ -5,6 +5,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { PeopleFill, HeartFill, Chat } from "react-bootstrap-icons";
 import Comments from '../../../asset/comments/Comments';
 import axios from 'axios';
+import moment from 'moment';
 
 const BoardDetail = () => {
   const [board, setBoardDetail] = useState({});
@@ -48,11 +49,11 @@ const BoardDetail = () => {
           </div>
           <hr />
           <Breadcrumb>
-            <Breadcrumb.Item href="/Community">Home</Breadcrumb.Item>
-            <Breadcrumb.Item href="/">
+            <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+            <Breadcrumb.Item href="/Community">
               Community
             </Breadcrumb.Item>
-            <Breadcrumb.Item>구인/구직</Breadcrumb.Item>
+            <Breadcrumb.Item href="/Community/boardlist">전체글</Breadcrumb.Item>
           </Breadcrumb>
 
           <Card className="mb-4">
@@ -65,7 +66,7 @@ const BoardDetail = () => {
                       <Col>
                         <Form.Label htmlFor="title" className="form-label"
                           style={{ fontWeight: 'bold' }}>
-                         작성일 : {board.createDate}
+                         작성일 : {moment(board.createDate).format('YYYY-MM-DD')}
                         </Form.Label>
                       </Col>
                       <Col className="text-end">
@@ -134,8 +135,11 @@ const BoardDetail = () => {
 
                     <Button onClick={boarddelete} variant="danger" className="mb-2">
                         삭제
-                    </Button> 
-                  </div>                  
+                    </Button>
+
+ 
+                  </div>
+                  
                 </div>
               </Form>
             </Card.Body>
