@@ -1,88 +1,61 @@
-import React, {useState} from 'react';
-import {Form, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import React, { useRef } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import moment from 'moment';
 
 function Login() {
-  const [memberId, setMemberId] = useState("");
-  const [memberPw, setMemberPw] = useState("");
-  //const navigate = useNavigate();
-  /*
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if(!memberId || !memberPw){
-      alert("모든 필드를 채워주세요.");
-      return;
-    }
+  const formRef = useRef();
+  const [cookies, setCookie] = useCookies(['id']);
 
-    try{
-      const response = await axios.post('/Login',{
-        memberId : memberId,
-        memberPw : memberPw
-      });
-      if(response.status === 200) {
-        console.log(memberId);
-        console.log(memberPw);
-        sessionStorage.setItem("memberId", memberId);
-        sessionStorage.setItem("nickName", response.data.nickName);
-        document.location.href = "/";
-      }
-      console.log(response.data);
-    } catch(error){
-      console.error(error);
-    } 
-  };
-  */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!memberId || !memberPw){
-      alert("모든 필드를 채워주세요.");
-      return;
-    }
-
-    axios.post('/Login', {
-      memberId : memberId,
-      memberPw : memberPw
-    })
-    .then(response => {
-      if(response.status === 200) {
-        console.log(memberId);
-        console.log(memberPw);
-        document.location.href = "/";
-      }
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-};
+    axios
+      .post('/Login', { // 로그인 요청
+        memberId: formRef.current.memberId.value,
+        memberPw: formRef.current.memberPw.value
+      })
+      .then((res) => {
+        // moment는 날짜구하는 라이브러리 이며 1분후를 나타내고 expires의 타입이 date라서 마지막메소드로 치환해준다
+        const expires = moment().add('1', 'm').toDate();
+        setCookie('id', res.data.memberId, { expires }); // 쿠키에 아이디 저장
+        console.log('res : ', res);
+        console.log(cookies);
+         document.location.href = "/";
+      })
+      .catch(error => {
+        console.error(error);
+        alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
+      });
+  };
   return (
     <div className="Login member">
-      <Form className='login' method='PoST' action='/Login' onSubmit={handleSubmit}>
+      <Form className='login' ref={formRef} onSubmit={handleSubmit}>
         <h1 className='text-center'>로그인</h1>
         <br />
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>아이디</Form.Label>
-          <Form.Control type="text" placeholder="아이디를 입력해주세요." onChange={e => setMemberId(e.target.value)} required/>
+          <Form.Control type="text" name='memberId' placeholder="아이디를 입력해주세요." required />
           <Form.Control.Feedback type="invalid">
-              아이디를 입력해주세요.
+            아이디를 입력해주세요.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formGroupPassword">
           <Form.Label>비밀번호</Form.Label>
-          <Form.Control type="password" placeholder="비밀번호를 입력해주세요." onChange={e => setMemberPw(e.target.value)} required/>
+          <Form.Control type="password" name='memberPw' placeholder="비밀번호를 입력해주세요." required />
           <Form.Control.Feedback type="invalid">
-              비밀번호를 입력해주세요.
+            비밀번호를 입력해주세요.
           </Form.Control.Feedback>
         </Form.Group>
-        <br/>
+        <br />
         <Button className="mb-3" variant="primary" type="submit">
           로그인
         </Button>
         <Form.Group className='text-center link'>
-        <Link to='/join'> 회원가입 | </Link>
-        <Link to='/findid'> 아이디 찾기 | </Link>
-        <Link to='/findpw'> 비밀번호 찾기 </Link>
+          <Link to='/join'> 회원가입 | </Link>
+          <Link to='/findid'> 아이디 찾기 | </Link>
+          <Link to='/findpw'> 비밀번호 찾기 </Link>
         </Form.Group>
       </Form>
     </div>
