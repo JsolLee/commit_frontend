@@ -10,11 +10,12 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const News_acticle_newest = ({ latestNews }) => {
 
   if (!latestNews || !Array.isArray(latestNews)) {
-    return <div>Loading latest news...</div>; 
+    return <div>Loading latest news...</div>;
   }
 
   return (
@@ -30,7 +31,11 @@ const News_acticle_newest = ({ latestNews }) => {
             {latestNews.map((news, index) => (
               <tr key={index}>
                 <th scope="row" className="col-2 text-center">{index + 1}</th>
-                <td className="col-10">{news.title}</td>
+                <td className="col-10">
+                  <Link to={`/news/article/${news.id}`}>
+                    {news.title}
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

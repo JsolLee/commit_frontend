@@ -12,7 +12,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const News_acticle_contents = ({ image, content }) => {
+const News_acticle_contents = ({ image, content, title }) => {
 
   News_acticle_contents.propTypes = {
     image: PropTypes.string.isRequired,
@@ -22,11 +22,11 @@ const News_acticle_contents = ({ image, content }) => {
   return (
     <article className="container" id="news_view_content" name="news_view_content">
       <div className="row">
-          <div className="col-12 mb-3">
-            {image}{/* <img src="../../assets/images/issue_veiw_1.jpg" className="img-fluid d-block mx-auto" id="fullscreenImage" style="cursor:pointer;" alt="openAI"></img> */}
-          <div className="text-center"><small>OpenAI ChatGPT-3[사진=OpenAI]</small></div>
-          </div>
-          <div className="col-12">{content}</div>
+        <div className="col-12 mb-3">
+          <img src={image} className="img-fluid d-block mx-auto" style={{ cursor : 'pointer' }} alt={title} />
+          <div className="text-center"><small>관련 사진</small></div>
+        </div>
+        <div className="col-12">{content}</div>
       </div>
     </article>
   )

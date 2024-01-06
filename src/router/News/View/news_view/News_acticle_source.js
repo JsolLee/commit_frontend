@@ -22,7 +22,7 @@ const News_acticle_source = ({ origin, writer, originDate }) => {
   News_acticle_source.propTypes = {
     origin: PropTypes.string.isRequired,
     writer: PropTypes.string.isRequired,
-    originDate: PropTypes.string.isRequired
+    originDate: PropTypes.number.isRequired
   }
 
   return (

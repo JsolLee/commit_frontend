@@ -1,4 +1,3 @@
-// News_main.js
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { use_Get_News, use_Get_Category } from './Main/hooks/use_Get_API'
@@ -8,7 +7,8 @@ import News from './Main/JS/News'
 import News_View from './View/News_View'
 import News_Category from './List/News_Category'
 
-const NewsMain = () => {
+const News_Main = () => {
+
   const { category, id } = useParams()
 
   const {
@@ -29,13 +29,10 @@ const NewsMain = () => {
     error: newsError
   } = use_Get_News(id || '')
 
-  // 로딩 상태 확인
   if (categoryLoading || newsLoading) return <div>Loading...</div>
-  // 에러 상태 확인
   if (categoryError) return <div>Error fetching category data: {categoryError.message}</div>
   if (newsError) return <div>Error fetching news data: {newsError.message}</div>
 
-  // 선택적 컴포넌트 렌더링
   if (category) {
     return (
       <News_Category
@@ -59,4 +56,4 @@ const NewsMain = () => {
   }
 }
 
-export default NewsMain
+export default News_Main

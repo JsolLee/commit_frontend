@@ -12,6 +12,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const News_acticle_related = ({ relatedNews }) => {
 
@@ -24,14 +25,18 @@ const News_acticle_related = ({ relatedNews }) => {
           {relatedNews.map((news, index) => (
             <div key={index} className="col">
               <div className="card">
-                {/* {news.image && <img src={news.image} className="card-img-top" alt={news.title} />} */}
+                  <img src={news.image} className="card-img-top" alt={news.title} />
                 <div className="card-body">
                   <h5 className="card-title">{news.title}</h5>
-                  <p className="card-text">{news.content}</p>
+                  <p className="card-text">
+                    {news.content.length > 20 ? news.content.substring(0, 20) + "..." : news.content}
+                  </p>
                 </div>
-                <div className="card-footer">
-                  <small className="text-body-secondary">기사 보기</small>
-                </div>
+                <Link to={`/news/article/${news.id}`} className="stretched-link">
+                  <div className="card-footer">
+                    <small className="text-body-secondary">기사 보기</small>
+                  </div>
+                </Link>
               </div>
             </div>
           ))}
@@ -46,8 +51,7 @@ News_acticle_related.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string,
-      // image: PropTypes.string,
-      // link: PropTypes.string 
+      image: PropTypes.string 
     })
   ).isRequired
 }

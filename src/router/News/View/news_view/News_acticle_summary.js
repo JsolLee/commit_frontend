@@ -6,28 +6,35 @@
   기능
     - 뉴스 카테고리, 뉴스 제목(글자수 제한)
 */
-
-
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const News_acticle_summary = ({ category, title }) => {
 
-  News_acticle_summary.propTypes = {
-    category: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  }
-
   return (
-    <article className="mb-4" id="news_view_origin" name="news_view_origin">
+    <div className="mb-4">
       <small>
-          <a href="#" className="text-muted">News</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-muted">{category}</a>&nbsp;❕&nbsp;
-          <a href="#" className="text-primary">{title}</a>
+        <Link to={`/news`} className="text-muted">
+          News
+        </Link>
+        &nbsp;❕&nbsp;
+        <Link to={`/news/category/${category}`} className="text-muted">
+          {category}
+        </Link>
+        &nbsp;❕&nbsp;
+          <span className="text-primary" style={{ verticalAlign: 'baseline' }}>
+            {title.length > 15 ? title.substring(0, 15) + "..." : title}
+          </span >
+        &nbsp;&nbsp;
       </small>
-    </article>
+    </div>
   )
+}
 
+News_acticle_summary.propTypes = {
+  category: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default News_acticle_summary

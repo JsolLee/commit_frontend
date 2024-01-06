@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 
 const News_Category_List = ({ listNews }) => {
 
+    if (!listNews) { return <div>No list news found</div> }
+
     const newsItems = listNews.map((newsItem) => (
-        <Link to={`/news/id/${newsItem.id}`} key={newsItem.id} className="list-group-item list-group-item-action">
+        <Link to={`/news/article/${newsItem.id}`} key={newsItem.id} className="list-group-item list-group-item-action">
+            <hr/>
             <div className="row">
                 <div className="col-md-1">
                     <img src={newsItem.image} className="img-fluid" alt="news-thumbnail" />

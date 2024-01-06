@@ -7,7 +7,7 @@ const News_Category_Main = ({ topNews }) => {
 
     return (
         <>
-            <h3 className="fw-bold">국내기업</h3>
+            <h3 className="fw-bold">{topNews.category}</h3>
             <h2 className="pb-2 border-bottom"></h2>
 
             <div className="list-group-item list-group-item-action">
