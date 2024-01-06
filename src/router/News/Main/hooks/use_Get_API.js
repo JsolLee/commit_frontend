@@ -13,15 +13,12 @@ const use_Get_API = (url) => {
             setError(null)
         } else {
             setLoading(true)
-            console.log('Making API request to:', url)
             axios.get(url)
                 .then(response => {
-                    console.log('API response:', response.data)
                     setData(response.data)
                     setLoading(false)
                 })
                 .catch(err => {
-                    console.error('API request error:', err)
                     setError(err)
                     setLoading(false)
                 })

@@ -4,6 +4,7 @@
 */
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer_category = () => {
 
@@ -17,10 +18,9 @@ const Footer_category = () => {
                 <h5><b>뉴스</b></h5>
                 <hr />
                 <ul className="list-unstyled">
-                    <li><a href="#" className="link-dark" style={{ textDecoration: 'none'}}>IT 이슈</a></li>
-                    <li><a href="#" className="link-dark" style={{ textDecoration: 'none'}}>국내 기업 뉴스</a></li>
-                    <li><a href="#" className="link-dark" style={{ textDecoration: 'none'}}>대외 활동</a></li>
-                    <li><a href="#" className="link-dark" style={{ textDecoration: 'none'}}>제휴 미디어</a></li>
+                    <li><Link to={"/news/category/infotech"} className="link-dark" style={{ textDecoration: 'none'}}>IT 이슈</Link></li>
+                    <li><Link to={"/news/category/company"} className="link-dark" style={{ textDecoration: 'none'}}>국내 기업</Link></li>
+                    <li><Link to={"/news/category/conference"} className="link-dark" style={{ textDecoration: 'none'}}>대외 활동</Link></li>
                 </ul>
             </div>
 
