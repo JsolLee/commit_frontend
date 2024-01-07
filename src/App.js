@@ -1,5 +1,4 @@
-// import React from 'react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Home from "./router/Home";
 import Community_main from "./router/Community/Community_main";
@@ -13,8 +12,7 @@ import FindId from "./router/Member/findid";
 import FindIdOk from "./router/Member/findidok";
 import FindPw from "./router/Member/findpw";
 import Job_main from "./router/Job/Job_main";
-import axios from 'axios';
-
+import Header from './components/Header';
 
 function App() {
 
@@ -22,27 +20,19 @@ function App() {
   const [isLogin, setIsLogin] = useState(false); //로그인 관리
 
   useEffect(() => {
-    if (sessionStorage.getItem("nickName") === null) {
-      // sessionStorage 에 nickName 라는 key 값으로 저장된 값이 없다면
-      console.log("isLogin ?? :: ", isLogin);
+    if (sessionStorage.getItem("member_id") === null) {
+      // sessionStorage 에 member_id 라는 key 값으로 저장된 값이 없다면
+      isLogin;
     } else {
-      // sessionStorage 에 nickName 라는 key 값으로 저장된 값이 있다면
+      // sessionStorage 에 member_id 라는 key 값으로 저장된 값이 있다면
       // 로그인 상태 변경
       setIsLogin(true);
-      console.log("isLogin ?? :: ", isLogin);
     }
-  });
-
-  useEffect(() => {
-    axios.get('/')
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(err => console.log(err))
-  }, []);
+  }, [isLogin]);
 
   return (
     <div>
+      <Header isLogin={isLogin} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news/*" element={<News_main />}>

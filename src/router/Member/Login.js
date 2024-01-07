@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import moment from 'moment';
+// import { useCookies } from 'react-cookie';
+// import moment from 'moment';
 
 function Login() {
   const formRef = useRef();
-  const [cookies, setCookie] = useCookies(['id']);
+  // const [cookies, setCookie] = useCookies(['id']);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,14 +18,13 @@ function Login() {
       })
       .then((res) => {
         // moment는 날짜구하는 라이브러리 이며 1분후를 나타내고 expires의 타입이 date라서 마지막메소드로 치환해준다
-        const expires = moment().add('20', 'm').toDate();
-        setCookie('id', res.data.memberId, { expires }); // 쿠키에 아이디 저장
-        console.log('res : ', res);
-        console.log(cookies);
+        // const expires = moment().add('20', 'm').toDate();
+        // setCookie('id', res.data.memberId, { expires }); // 쿠키에 아이디 저장
+        sessionStorage.setItem("member_id", res.data.memberId);
+        sessionStorage.setItem("nick_name", res.data.nickName);
         document.location.href = "/";
       })
-      .catch(error => {
-        console.error(error);
+      .catch(() => {
         alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
       });
   };

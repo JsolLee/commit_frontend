@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../css/Edit.css";
 
-const Name_edit = () => {
+const Name_edit = (props) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
 
@@ -25,7 +25,7 @@ const Name_edit = () => {
           <h3 className='text-center'>닉네임 변경</h3>
           <Form.Group as={Row} className="mb-3 me-0" controlId="formGroupBeforeChange">
             <Form.Label className='col-sm-2 col-form-label edit-content'>현재 닉네임</Form.Label>
-            <Form.Control type="text" className='form-control pw-input' placeholder="COMMIT" disabled />
+            <Form.Control type="text" className='form-control pw-input' placeholder={props.userNickname} disabled />
           </Form.Group>
           <Form.Group as={Row} className="mb-3 me-0" controlId="formGroupAfterChange">
             <Form.Label className='col-sm-2 col-form-label edit-content'>닉네임 변경</Form.Label>

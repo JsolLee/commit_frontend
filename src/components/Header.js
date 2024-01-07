@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import './Header.css'
 import axios from 'axios';
 
 
-const Header = () => {
+const Header = (props) => {
   const [isNewsSubMenuOpen, setIsNewsSubMenuOpen] = useState(false);
   const [isJobSubMenuOpen, setIsJobSubMenuOpen] = useState(false);
   const [isCommunitySubMenuOpen, setIsCommunitySubMenuOpen] = useState(false);
@@ -27,27 +27,12 @@ const Header = () => {
 
   const logOut = () => {
     axios.get('/Logout')
-    .then(res => {
-      console.log(res.data);
-      // document.location.href = "/";
+    .then(() => {
+      sessionStorage.clear();
+      document.location.href = "/";
     })
     .catch(err => console.log(err))
 };
-
-
-  // 세션
-  const [isLogin, setIsLogin] = useState(false); //로그인 관리
-  useEffect(() => {
-    if (sessionStorage.getItem("nickName") === null) {
-      // sessionStorage 에 nickName 라는 key 값으로 저장된 값이 없다면
-      console.log("isLogin ?? :: ", isLogin);
-    } else {
-      // sessionStorage 에 nickName 라는 key 값으로 저장된 값이 있다면
-      // 로그인 상태 변경
-      setIsLogin(true);
-      console.log("isLogin ?? :: ", isLogin);
-    }
-  });
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-primary nav fw-bolder header" data-bs-theme="dark">
@@ -80,16 +65,16 @@ const Header = () => {
             )}
           </Nav>
           <Nav>
-            {isLogin ? (
+            {(props.isLogin === true) ? (
               <>
-                <Nav.Link><Link to='/mypage'>{sessionStorage.getItem("nickName")} 마이페이지</Link></Nav.Link>
-                <Nav.Link><Link to='/logout'>로그아웃</Link></Nav.Link>
+                <Nav.Link><Link to='/Mypage'>{sessionStorage.getItem("nick_name")}의 마이페이지</Link></Nav.Link>
+                <Nav.Link onClick={logOut}>로그아웃</Nav.Link>
               </>
             ) : (
               <>
                 <Nav.Link><Link to='/login'>로그인</Link></Nav.Link>
                 <Nav.Link><Link to='/join'>회원가입</Link></Nav.Link>
-                <Nav.Link onClick={logOut}>로그아웃</Nav.Link>
+                
               </>
             )}
           </Nav>

@@ -32,6 +32,7 @@ const Job = () => {
   useEffect(() => {
     axios.get(`/Job?page=${page}`)
       .then(res => {
+        console.log(res.data)
         setData(res.data.content);
         setTotalPages(res.data.totalPages);
       })
@@ -41,8 +42,6 @@ const Job = () => {
   const changePage = (pageNumber) => {
     setPage(pageNumber);
   }
-
-  console.log(data)
 
   return (
     <div>
