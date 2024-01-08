@@ -61,6 +61,7 @@ const Header = (props) => {
                 <li><Link to="/Community/boardlist">자소서</Link></li>
                 <li><Link to="/Community/boardlist">합격자조언</Link></li>
                 <li><Link to="/Community/boardlist">구인/구직</Link></li>
+                <li><Link to="/Community/boardlist">기타</Link></li>
               </ul>
             )}
           </Nav>
