@@ -23,11 +23,10 @@ const BoardList = () => {
     const [boardList, setBoardList] = useState([]);
     const [page, setPage] = useState(1); 
 
+    //페이징 기능
     const getBoardList = useCallback(async (pageNumber) => {
         try {
-            console.log(pageNumber)
-            const response = await axios.get(`http://localhost:9999/Community/boardlist?page=${pageNumber}`);
-            console.log(response.data.content)
+            const response = await axios.get(`http://localhost:9999/community/boardlist?page=${pageNumber}`);
             setBoardList(response.data.content);
         } catch (error) {
             console.error('에러 메세지', error);
@@ -43,6 +42,34 @@ const BoardList = () => {
         setPage(pageNumber);
     };
 
+    //검색 기능
+    const [keyword, setKeyword] = useState('');
+    const [searchData, setSearchData] = useState([]); 
+    //셀렉트 박스
+    const [selectedOption, setSelectedOption] = useState('전체');
+    //셀렉트 박스 선택 함수
+    const select = (eventKey) => {
+        setSelectedOption(eventKey);
+        };
+    //검색어에 해당되는 게시물 조회
+    const boardSearch = async () => {
+        try {
+        const response = await fetch(`http://localhost:9999/community/boardsearch?keyword=${keyword}&option=${selectedOption}`);
+        const searchData = await response.json();
+        setSearchData(searchData);
+        } 
+        catch (error) {
+        console.error('검색 기능 실패', error);
+        }
+    };
+  
+    //검색 이후 리스트에 반영
+    useEffect(() => {
+        if (searchData.length > 0) {
+        // 검색 결과가 있을 경우에만 boardList를 업데이트
+        setBoardList(searchData);
+        }
+    }, [searchData]);
 
 //실제 렌더링 되는 부분
 return (
@@ -51,22 +78,32 @@ return (
         <Container>
 
         <div className="d-flex justify-content-between align-items-center mb-3">                
-
-            <Dropdown.Menu>
-                <Dropdown.Item eventKey="전체글">전체글</Dropdown.Item>
-                <Dropdown.Item eventKey="이직/신입">이직/신입</Dropdown.Item>
-                <Dropdown.Item eventKey="자소서">자소서</Dropdown.Item>
-                <Dropdown.Item eventKey="합격자조언">합격자조언</Dropdown.Item>
-                <Dropdown.Item eventKey="구인/구직">구인/구직</Dropdown.Item>
-            </Dropdown.Menu>
+            <Dropdown onSelect={select}>
+                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                    {selectedOption}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item eventKey="전체">전체</Dropdown.Item>
+                    <Dropdown.Item eventKey="제목">제목</Dropdown.Item>
+                    <Dropdown.Item eventKey="내용">내용</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
 
             <InputGroup>
-                        <FormControl
-                            type="text"
-                            placeholder="검색어를 입력하세요"
-                        />
-                        <Button variant="primary" >검색</Button>
-            </InputGroup>
+                <FormControl
+                    type="text"
+                    placeholder="검색어를 입력하세요"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            boardSearch();
+                        }
+                    }}
+                />
+                <Button variant="primary" onClick={boardSearch}>검색</Button>
+          </InputGroup>
+            
         </div>
 
             <Table striped bordered hover>
@@ -84,7 +121,7 @@ return (
                 <tr key={boardList.id}>
                     <td className="text-center" style={{ fontSize: '20px' }}>{boardList.id}</td>
                     <td className="text-center" style={{ fontSize: '20px' }}>
-                        <Link to={`/Community/boarddetail/${boardList.id}`} style={{ color: "black", textDecoration: "none" }}>
+                        <Link to={`/community/boarddetail/${boardList.id}`} style={{ color: "black", textDecoration: "none" }}>
                             {boardList.title}
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <PeopleFill className="me-2" />{boardList.viewcount}&nbsp;

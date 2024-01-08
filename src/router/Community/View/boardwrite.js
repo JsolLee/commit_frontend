@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
 import FileUpload from './fileupload.js';
@@ -8,20 +8,30 @@ import FileUpload from './fileupload.js';
 const BoardWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('전체글');
+  const [selectedCategory, setSelectedCategory] = useState('구인/구직');
   const [showAlert, setShowAlert] = useState(false);
+  const [isContentEmpty, setIsContentEmpty] = useState(false); // 추가
+
+  const navigate = useNavigate();
 
   const boardTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  const boardCategory = (selected) => {
+  const category = (selected) => {
     setSelectedCategory(selected);
   };
 
   const boardWrite = async () => {
+    // content 값이 null 또는 빈 문자열인 경우 alert를 띄우고 함수 종료
+    if (!content || content.trim() === '') {
+      setIsContentEmpty(true);
+      alert('내용을 입력해주세요.');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:9999/Community/boardwrite', {
+      const response = await fetch('http://localhost:9999/community/boardwrite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,12 +39,14 @@ const BoardWrite = () => {
         body: JSON.stringify({
           title,
           content,
+          category: selectedCategory,
         }),
       });
   
       if (response.ok) {
         // 성공적으로 글이 등록되었을 때의 처리
         setShowAlert(true);
+        navigate("/Community/boardlist");
       } else {
         // 실패했을 때의 처리
         console.error('글 등록 실패');
@@ -43,6 +55,11 @@ const BoardWrite = () => {
       console.error('에러 발생', error);
     }
   };
+
+  // content 상태값이 변경될 때마다 실행되는 useEffect
+  useEffect(() => {
+    setIsContentEmpty(false); // content가 변경될 때마다 alert 상태를 초기화
+  }, [content]);
 
   return (
     <Container>
@@ -57,7 +74,7 @@ const BoardWrite = () => {
         <Form>
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
-            <Form.Select value={selectedCategory} onChange={(e) => boardCategory(e.target.value)}>
+            <Form.Select value={selectedCategory} onChange={(e) => category(e.target.value)}>
               <option value="구인/구직">구인/구직</option>
               <option value="이직/신입">이직/신입</option>
               <option value="면접">면접</option>
@@ -76,7 +93,7 @@ const BoardWrite = () => {
           <Form.Group className="mb-4">
             <ReactQuill
               style={{ height: '400px' }}
-              theme="snow" value={content} onChange={setContent} />
+              theme="snow" value={content} onChange={setContent}/>
           </Form.Group><br></br>
 
           <Row className="justify-content-start mt-3">
@@ -89,8 +106,8 @@ const BoardWrite = () => {
 
               <div className="d-flex justify-content-end">
                 
-                <Link to='/Community/boardlist'>
-                  <Button variant="primary" onClick={boardWrite}>
+                <Link to='/community/boardlist'>
+                  <Button variant="primary" onClick={boardWrite} disabled={isContentEmpty}>
                     등록
                   </Button>
                 </Link>

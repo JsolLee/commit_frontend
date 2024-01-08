@@ -9,7 +9,7 @@ import axios from 'axios';
 const BoardEdit = () => {
   
   const navigate = useNavigate();
-  const [board, setBoardEdit] = useState({});
+  // const [board, setBoardEdit] = useState({});
   const { id } = useParams();
 
   // 게시판 제목, 내용, 카테고리
@@ -19,9 +19,9 @@ const BoardEdit = () => {
 
   // 선택한 게시물의 원본 내용 GET
   useEffect(() => {
-    axios.get(`http://localhost:9999/Community/boardedit/${id}`).then((response) => {
+    axios.get(`http://localhost:9999/community/boardedit/${id}`).then((response) => {
       const { title, content, category } = response.data;
-      setBoardEdit(response.data);
+      // setBoardEdit(response.data);
       setTitle(title);
       setContent(content);
       setCategory(category);
@@ -44,24 +44,59 @@ const BoardEdit = () => {
   };
   
   //글 수정 요청
-  const boardedit = async () => {
-    const req = {
-			title: title, 
-			content: content,
-      category: category
-		}
+  // const boardedit = async () => {
+  //   const req = {
+	// 		title: title, 
+	// 		content: content,
+  //     category: category
+	// 	}
 
-    try {
-      const response = await axios.post(`http://localhost:9999/Community/boardedit/${id}`, req);
-      if (response.status == 200) {
-        alert("게시글을 성공적으로 수정했습니다.");
-        navigate("/Community/boardlist");
-      }
-      console.log("글 수정 완료");
-    } catch (error) {
-      console.error("글 수정 실패", error);
+  //   try {
+  //     const response = await axios.post(`http://localhost:9999/Community/boardedit/${id}`, req);
+  //     if (response.status == 200) {
+  //       alert("게시글을 성공적으로 수정했습니다.");
+  //       navigate("/Community/boardlist");
+  //     }
+  //     console.log("글 수정 완료");
+  //   } catch (error) {
+  //     console.error("글 수정 실패", error);
+  //   }
+  // };
+
+
+//글 수정 요청
+const boardedit = async () => {
+  // content 값이 null 또는 빈 문자열인 경우 alert를 띄우고 함수 종료
+  if (!content || content.trim() === '') {
+    alert('내용을 입력해주세요.');
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:9999/community/boardedit/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        content,
+        category,
+      }),
+    });
+
+    if (response.ok) {
+      // 성공적으로 글이 수정되었을 때의 처리
+      alert("게시글을 성공적으로 수정했습니다.");
+      navigate("/Community/boardlist");
+    } else {
+      // 실패했을 때의 처리
+      console.error('글 수정 실패');
     }
-  };
+  } catch (error) {
+    console.error('에러 발생', error);
+  }
+};
 
   return (
     <Container>
@@ -76,7 +111,7 @@ const BoardEdit = () => {
       <Form>
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
-            <Form.Select value={board.category} onChange={changeCategory}>
+            <Form.Select onChange={changeCategory} value={category} >
               <option value="구인/구직">구인/구직</option>
               <option value="이직/신입">이직/신입</option>
               <option value="면접">면접</option>
