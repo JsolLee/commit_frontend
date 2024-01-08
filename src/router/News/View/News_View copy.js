@@ -1,5 +1,8 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import { useParams } from 'react-router-dom'
+// import { use_Get_News } from '../Main/hooks/use_Get_API.js'
+
 
 // 양쪽 사이드바 = 왼쪽 : 키워드 추천 || 오른쪽 : 공유, 좋아요, 스크랩, 신고
 import News_acticle_keyword from './news_view/News_acticle_keyword.js'
@@ -19,7 +22,19 @@ import News_acticle_popular from './news_view/News_acticle_popular.js'
 
 const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
 
-  if (!news) { return <div>No news data available</div> }
+  // const { id } = useParams()
+
+  // console.log('ID from useParams: ', id)
+
+  // const { data: newsData, loading, error } = use_Get_News(id)
+  
+  // console.log('API Results : ', newsData )
+
+  // if (loading) return <div>Loading...</div>
+  // if (error) return <div>Error fetching news: {error.message}</div>
+  // if (!newsData) return <div>No data found</div>
+
+  // const { news, popularNews, latestNews, relatedNews } = newsData
 
   return (
     <>
@@ -30,10 +45,10 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
           </div>
 
           <div className="col-md-10">
-            <News_acticle_summary category={news.category} title={news.title} />
+            <News_acticle_summary category={news.category} title={news.title}/>
             <News_acticle_title title={news.title} />
             <News_acticle_subtitle subtitle={news.subtitle}/>
-            <News_acticle_contents image={news.image} title={news.title} content={news.content}/>
+            <News_acticle_contents image={news.image} content={news.content}/>
             <News_acticle_source origin={news.origin} writer={news.writer} originDate={news.originDate}/>
           </div>
 

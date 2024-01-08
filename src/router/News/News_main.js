@@ -33,8 +33,6 @@ const News_Main = () => {
   if (categoryError) return <div>Error fetching category data: {categoryError.message}</div>
   if (newsError) return <div>Error fetching news data: {newsError.message}</div>
 
-  console.log('News_Main:', {category, id})
-
   if (category) {
     return (
       <News_Category
