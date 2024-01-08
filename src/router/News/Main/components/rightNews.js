@@ -17,6 +17,20 @@ import '../CSS/head.css'
 
 function rightNews() {
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get(`/news`);
+                setData(response.data);
+            } catch (e) {
+                setError(e);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
     const [data, setData] = useState({
         id: '',
         category: '',
@@ -36,19 +50,6 @@ function rightNews() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get(`/news`);
-                setData(response.data);
-            } catch (e) {
-                setError(e);
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
 
     if (loading) return <div>데이터를 로딩 중입니다...</div>;
     if (error) return <div>데이터 로딩 중 에러가 발생했습니다.</div>;
