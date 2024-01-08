@@ -29,7 +29,7 @@ const use_Get_API = (url) => {
 }
 
 const use_Get_Category = (category) => {
-    const apiUrl = category ? `http://localhost:9999/news/category/${category}` : null
+    const apiUrl = category ? `/news/category/${category}` : null
     const { data, loading, error } = apiUrl ? use_Get_API(apiUrl) : { data: null, loading: false, error: null }
     
     
@@ -42,7 +42,7 @@ const use_Get_Category = (category) => {
 }
 
 const use_Get_News = (id) => {
-    const apiUrl = id ? `http://localhost:9999/news/article/${id}` : null
+    const apiUrl = id ? `/news/article/${id}` : null
     const { data, loading, error } = apiUrl ? use_Get_API(apiUrl) : { data: null, loading: false, error: null }
     
     const news = data ? data.news : null

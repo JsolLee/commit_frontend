@@ -12,17 +12,23 @@
 */
 
 import React from 'react'
+import use_Post_API from '../../Main/hooks/use_Post_API'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { SiNaver } from "react-icons/si"
 import { FaMeta } from "react-icons/fa6"
 import { FaInstagram } from "react-icons/fa"
 import { RiKakaoTalkFill } from "react-icons/ri"
-import { FaShareAlt, FaThumbsUp, FaBookmark, FaExclamationTriangle } from 'react-icons/fa';
+import { FaShareAlt, FaThumbsUp, FaBookmark, FaExclamationTriangle } from 'react-icons/fa'
 
-const News_acticle_action = () => {
+const News_acticle_action = ({ id }) => {
+
+  const { sendLike, loading, error } = use_Post_API()
+
+  const handleLike = () => { sendLike(id) }
 
   return (
     <aside className="d-flex flex-column align-items-center sticky-top" style={{ top: '50%' }}>
+      {error && <p className="text-danger">Error: {error.message}</p>}
       <Dropdown drop="end" className="my-1 d-block">
         <Dropdown.Toggle variant="outline-secondary" id="dropdown-share-button" className="w-100">
           <FaShareAlt />
@@ -36,7 +42,9 @@ const News_acticle_action = () => {
       </Dropdown>
       <br></br>
 
-      <button className="btn btn-outline-success my-1"><FaThumbsUp /></button><br></br>
+      <button className="btn btn-outline-success my-1" onClick={handleLike} disabled={loading}>
+        {loading ? 'Loading...' : <FaThumbsUp />}
+      </button><br></br>
       <button className="btn btn-outline-warning my-1"><FaBookmark /></button><br></br>
       <button className="btn btn-outline-danger my-1"><FaExclamationTriangle /></button>
     </aside>

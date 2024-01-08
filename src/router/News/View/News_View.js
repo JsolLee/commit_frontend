@@ -17,6 +17,9 @@ import News_acticle_related from './news_view/News_acticle_related.js'
 import News_acticle_newest from './news_view/News_acticle_newest.js'
 import News_acticle_popular from './news_view/News_acticle_popular.js'
 
+// 댓글
+import Comments from '../comments/Comments.js'
+
 const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
 
   if (!news) { return <div>No news data available</div> }
@@ -38,7 +41,7 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
           </div>
 
           <div className="col-md-1">
-            <News_acticle_action />
+            <News_acticle_action id={news.id}/>
           </div>
 
           <hr /><hr />
@@ -53,6 +56,8 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
           <News_acticle_popular popularNews={popularNews} />
         </div>
       </div>
+
+      <Comments newsId={news.id}/>
     </>
   )
 }
