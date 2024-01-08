@@ -15,22 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChatSquareDots, Person } from 'react-bootstrap-icons'
 
 
-// DB 기사제목
-
-// 메인 임포트
-
-// 합격자 조언 임포트
-
-// 면접 임포트
-
-// 자소서 임포트
-
-// 채용 임포트
-
-// 이직/신입 임포트
-
-// 후에 5개로 줄일고, 카테고리 별 components 생성 예정
-
 function Community() {
 
     const [data, setData] = useState([
@@ -48,10 +32,16 @@ function Community() {
     console.log(data)
 
     // "main" 카테고리에 대한 작업을 수행하는 코드
-    const mainData = data.filter(item => item.category === "main");
+    const sortedAllData = data.sort((a, b) => {
+        const dateA = new Date(a.createDate);
+        const dateB = new Date(b.createDate);
+        return dateB - dateA; // 내림차순 정렬
+      });
+
+    const latestData = sortedAllData.slice(0, 6);
 
     // "join" 카테고리에 대한 작업을 수행하는 코드
-    const joinData = data.filter(item => item.category === "job");
+    const joinData = data.filter(item => item.category === "join");
 
     // "ps" 카테고리에 대한 작업을 수행하는 코드
     const psData = data.filter(item => item.category === "ps");
@@ -60,25 +50,21 @@ function Community() {
     const adviceData = data.filter(item => item.category === "advice");
 
     // "job" 카테고리에 대한 작업을 수행하는 코드
-    const jobData = data.filter(item => item.category === "join");
+    const jobData = data.filter(item => item.category === "job");
 
     // "etc" 카테고리에 대한 작업을 수행하는 코드
     const etcData = data.filter(item => item.category === "etc");
 
 
     //  게시글 날짜 순 정렬
-    const sortedMainData = mainData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortedMainData = latestData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedJoinData = joinData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedPsData = psData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedAdviceData = adviceData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedJobData = jobData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedEtcData = etcData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
 
-    const DSEtcData = sortedEtcData.slice(0,6);
-    console.log(DSEtcData)
-
-
-    console.log(mainData)
+    console.log(latestData)
     console.log(joinData)
     console.log(psData)
     console.log(adviceData)
@@ -90,7 +76,7 @@ function Community() {
             <div className="Items1">
                 <div className="Item1">
                     <div className="Item_main">
-                        <div className="Item_main_btn1">메인</div>
+                        <div className="Item_main_btn1">전체</div>
                         <Link to={"/Community/boardlist"} className="Item_main_btn2">더보기</Link>
                     </div>
                     <div className="item_detail">
@@ -233,7 +219,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {DSEtcData.map((data) => (
+                            {sortedEtcData.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">

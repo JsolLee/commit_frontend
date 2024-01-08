@@ -3,7 +3,10 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
-import { FaDiscord, FaInstagram, FaFacebook, FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
+import { FaLink, FaInstagram, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
+import { SiNaver } from "react-icons/si"
+import { FaMeta } from "react-icons/fa6"
+import { RiKakaoTalkFill } from "react-icons/ri"
 import { IoWarningOutline, IoShareSocialOutline } from 'react-icons/io5';
 import { BsPeopleFill } from 'react-icons/bs';
 import "../CSS/jobView.css";
@@ -13,19 +16,24 @@ import "../CSS/jobView.css";
 function jobView() {
 
   // db 값
-  const [data, setData] = useState([
-    { id: '' },
-    { title: '' },
-    { career: '' },
-    { degree: '' },
-    { companyname: '' },
-    { location: '' },
-    { finishDate_S: '' },
-    { finishDate_D: '' },
-    { finishDate: '' },
-    { example: '서울 관악구 신림로67길 25' }
-  ]);
-
+  const [data, setData] = useState({
+    id: '',
+    title: '',
+    career: '',
+    degree: '',
+    companyname: '',
+    location: '',
+    location2: '',
+    finishDate_S: '',
+    finishDate_D: '',
+    finishDate: '',
+    image: '',
+    type: '',
+    page: '',
+    salary: '',
+  });
+  console.log(data.image)
+  console.log(data)
   const { id } = useParams();
 
   useEffect(() => {
@@ -36,7 +44,8 @@ function jobView() {
       .catch(err => console.log(err))
   }, []);
 
-  console.log(data)
+  console.log(data.image)
+  console.log(data.location2)
 
   // 카카오 api
 
@@ -118,16 +127,17 @@ function jobView() {
 
       // 키워드로 장소를 검색합니다
       console.log(data.location)
-      ps.keywordSearch(data.location, placesSearchCB);
+      ps.keywordSearch(data.location2, placesSearchCB);
 
       // 키워드 검색 완료 시 호출되는 콜백함수 입니다
       function placesSearchCB(datas, status) {
         if (status === window.kakao.maps.services.Status.OK) {
           var bounds = new window.kakao.maps.LatLngBounds();
 
-          for (var i = 0; i < datas.length; i++) {
-            displayMarker(datas[i]);
-            bounds.extend(new window.kakao.maps.LatLng(datas[i].y, datas[i].x));
+          // 첫 번째 장소에 대한 마커표시
+          if (datas.length > 0) {
+            displayMarker(datas[0]);
+            bounds.extend(new window.kakao.maps.LatLng(datas[0].y, datas[0].x));
           }
 
           map.setBounds(bounds);
@@ -147,12 +157,19 @@ function jobView() {
         });
       }
     }
-  }, [data]);
+
+
+  }, [data, id]);
 
   // 채용 마감시간 설정
   const formattedCreateDatetime = moment(data.createDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm");
   const formattedFinishDatetime = data.finishDate ? moment(data.finishDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm") : null;
 
+  // 이미지 정리
+  console.log(data.image)
+  console.log(typeof data.image)
+
+  const imageUrls = data.image.split(',');
 
   return (
     <Container fluid>
@@ -176,13 +193,16 @@ function jobView() {
           <Col>
             <NavDropdown id='share' title={<><IoShareSocialOutline className='mb-1' id='share' /> 공유</>}>
               <NavDropdown.Item href='#action/3.1'>
-                <FaDiscord /> Discord
+                <RiKakaoTalkFill /> KakaoTalk
               </NavDropdown.Item>
               <NavDropdown.Item href='#action/3.2'>
-                <FaInstagram /> Instagram
+                <SiNaver /> Naver
               </NavDropdown.Item>
               <NavDropdown.Item href='#action/3.3'>
-                <FaFacebook /> Facebook
+                <FaInstagram /> Instagram
+              </NavDropdown.Item>
+              <NavDropdown.Item href='#action/3.4'>
+                <FaMeta /> Meta
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleCopyLink}>
@@ -239,7 +259,7 @@ function jobView() {
               <tbody>
                 <tr><td className='p-1 ps-3'>경  력 : {data.career}</td></tr>
                 <tr><td className='p-1 ps-3'>학  력 : {data.degree}</td></tr>
-                <tr><td className='p-1 ps-3'>핵심역량 : React, Vue, Node</td></tr>
+                
               </tbody>
             </Table>
           </Col>
@@ -249,8 +269,8 @@ function jobView() {
                 <tr><th className='fs-4 p-1'>근무 조건</th></tr>
               </thead>
               <tbody>
-                <tr><td className='p-1 ps-3'>고용형태 : 정규직</td></tr>
-                <tr><td className='p-1 ps-3'>급  여 : 면접 후 결정</td></tr>
+                <tr><td className='p-1 ps-3'>고용형태 : {data.type}</td></tr>
+                <tr><td className='p-1 ps-3'>급  여 : {data.salary}</td></tr>
                 <tr>
                   <td className='p-1 ps-3'>
                     지  역 : {data.location} <a href='#Company'><Badge bg="secondary">지도 &gt;</Badge></a>
@@ -262,10 +282,34 @@ function jobView() {
         </Row>
       </Container>
 
+      
+
+      <div
+        className='mb-5'
+        style={{
+          width: '60%',
+          height: 'auto',
+          margin: '0 auto', // Center the box
+          // textAlign: 'center',
+          // border: '1px solid black',
+          // backgroundColor: 'rgba(0, 255, 255, 0.2)', // cyan with 30% transparency
+          // padding: '5px'
+        }}
+      >
+        {/* 이미지를 매핑하여 출력 */}
+        {data.image && data.image.trim() !== '' && imageUrls.map((imageUrl, index) => (
+          <img key={index} src={imageUrl.trim()} alt={`Image ${index + 1}`} style={{ maxWidth: '100%', height: 'auto' }} />
+        ))}
+
+        {/*컨텐트*/}
+        <div style={{margin:'0 auto'}}>{data.content}</div>
+      </div>
+
       <Container fluid id='condition' className='my-5 d-flex justify-content-md-center'>
         <div className='mx-3 mb-5'>
           <Button variant="primary" size="lg">
-            홈페이지 이동 &gt;
+          {/*_blank : 새창, rel : 링크 관계지정 속성 */}
+          <a href={data.page} target="_blank" rel="noopener noreferrer">홈페이지 이동 &gt;</a>
           </Button>
         </div>
         <div className='mx-3 mb-5'>
@@ -275,24 +319,13 @@ function jobView() {
         </div>
       </Container>
 
-      <div
-        className='mb-5'
-        style={{
-          width: '60%',
-          height: '800px',
-          backgroundColor: 'rgba(0, 255, 255, 0.2)', // cyan with 30% transparency
-          margin: '0 auto', // Center the box
-          textAlign: 'center',
-        }}
-      ></div>
-
-      <Alert key="primary" variant="primary" className='text-center'>
+      <Alert key="primary" variant="primary" className='text-center' style={{backgroundColor:'white'}}>
         <FaCalendar className='mb-1' /> 공고 기한 :  {formattedCreateDatetime} ~ {formattedFinishDatetime}
       </Alert>
 
 
       <Container id='Company' className='my-5 d-flex -content-'>
-        <Card style={{ width: '70rem' }}>
+        <Card style={{ width: '70rem', margin:'0 auto'}}>
           <Card.Body>
             <Row>
               <Card.Title>회사 소개</Card.Title>
@@ -301,14 +334,14 @@ function jobView() {
               <Col>
                 <Card.Text className='ms-3'>
                   <Row><Col>회  사</Col></Row>
-                  <Row className='ms-1'><Col> - {data.companyname} </Col></Row>
+                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.companyname} </Col></Row>
                   <Row><Col>규  모</Col></Row>
-                  <Row className='ms-1'><Col> - 중소기업</Col></Row>
-                  <Row><Col>email </Col></Row>
-                  <Row className='ms-1'><Col> - realBrush@naver.com</Col></Row>
+                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.size}</Col></Row>
+                  <Row><Col>홈페이지 주소 </Col></Row>
+                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.page}</Col></Row>
                   <Row><Col>주  소 </Col></Row>
                   <Row className='ms-1'>
-                    <Col ref={companyAddressRef}> - {data.location} <FaRegCopy onClick={handleCopyAddress} /></Col>
+                    <Col ref={companyAddressRef}> - {data.location2} <FaRegCopy onClick={handleCopyAddress} /></Col>
                   </Row>
                 </Card.Text>
               </Col>

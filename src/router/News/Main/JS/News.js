@@ -1,6 +1,7 @@
 import React from 'react';
 
-// Routes
+
+// axios
 
 
 // React Bootstrap
@@ -10,7 +11,6 @@ import LeftNews from '../components/leftNews'
 import MiddleNews from '../components/middleNews';
 import RightNews from '../components/rightNews';
 import Category from '../components/category';
-
 
 
 function News() {

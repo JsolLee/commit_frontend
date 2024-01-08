@@ -24,13 +24,13 @@ function Home() {
                     </p>
                     <br />
                     <div className="btn">
-                        <Link to="/News" className='btn-click'>
+                        <Link to="/news" className='btn-click'>
                             <div className='btn-click-menu'>
                                 뉴스
                             </div>
                         </Link>
 
-                        <Link to="/Community" className='btn-click'>
+                        <Link to="/community" className='btn-click'>
                             <div className='btn-click-menu'>
                                 커뮤니티
                             </div>

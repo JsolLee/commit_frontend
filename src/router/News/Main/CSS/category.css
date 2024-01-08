@@ -32,7 +32,7 @@
 }
 
 .col2 {
-    width: calc(((100% + 20px)/ 5) - 20px);
+    width: 270px;
     margin: 0;
     padding: 0;
 
@@ -88,7 +88,7 @@
     position: relative;
     margin-top: 12px;
     overflow: visible;
-    width: 224px;
+    width: 270px;
     height: 131px;
     background-color: #dedede;
     text-align: center;
