@@ -86,7 +86,7 @@ function rightNews() {
                             {data[5].subtitle}
                         </Card.Text>
                         <Button variant="primary">
-                            <Link to="/right1" style={{ color: 'white' }}>기사 더보기</Link>
+                            <Link to={`/news/article/${data[5].id}`} style={{ color: 'white' }}>기사 더보기</Link>
                         </Button>
                     </Card.Body>
                 </Card>
@@ -119,7 +119,7 @@ function rightNews() {
                             {data[6].subtitle}
                         </Card.Text>
                         <Button variant="primary">
-                            <Link to="/right2" style={{ color: 'white' }}>기사 더보기</Link>
+                            <Link to={`/news/article/${data[6].id}`} style={{ color: 'white' }}>기사 더보기</Link>
                         </Button>
                     </Card.Body>
                 </Card>

@@ -24,6 +24,14 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
 
   if (!news) { return <div>No news data available</div> }
 
+  const contents = news.content
+
+  // HTML 태그 적용
+  const appliedHTML = contents.replace(/<.*?>/g, (match) => `${match}`);
+
+  // 특수 문자 적용
+  const appliedSpecialChars = appliedHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
   return (
     <>
       <main className="container my-5">
@@ -35,13 +43,13 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
           <div className="col-md-10">
             <News_acticle_summary category={news.category} title={news.title} />
             <News_acticle_title title={news.title} />
-            <News_acticle_subtitle subtitle={news.subtitle}/>
-            <News_acticle_contents image={news.image} title={news.title} content={news.content}/>
-            <News_acticle_source origin={news.origin} writer={news.writer} originDate={news.originDate}/>
+            <News_acticle_subtitle subtitle={news.subtitle} />
+            <News_acticle_contents image={news.image} title={news.title} content={<div dangerouslySetInnerHTML={{ __html: appliedSpecialChars }} />} />
+            <News_acticle_source origin={news.origin} writer={news.writer} originDate={news.originDate} />
           </div>
 
           <div className="col-md-1">
-            <News_acticle_action id={news.id}/>
+            <News_acticle_action id={news.id} />
           </div>
 
           <hr /><hr />
@@ -49,7 +57,7 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
       </main>
 
       <div className="container my-5">
-        <News_acticle_related relatedNews={relatedNews}/>
+        <News_acticle_related relatedNews={relatedNews} />
         <div className="row my-5">
           <hr /><hr />
           <News_acticle_newest latestNews={latestNews} />
@@ -57,7 +65,7 @@ const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
         </div>
       </div>
 
-      <Comments newsId={news.id}/>
+      <Comments newsId={news.id} />
     </>
   )
 }

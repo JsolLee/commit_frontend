@@ -18,20 +18,6 @@ import '../CSS/head.css'
 
 function LeftNews() {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get(`/news`);
-                setData(response.data);
-            } catch (e) {
-                setError(e);
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
-
     const [data, setData] = useState({
         id: '',
         category: '',
@@ -51,7 +37,19 @@ function LeftNews() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get(`/news`);
+                setData(response.data);
+            } catch (e) {
+                setError(e);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
 
     if (loading) return <div>데이터를 로딩 중입니다...</div>;
     if (error) return <div>데이터 로딩 중 에러가 발생했습니다.</div>;
@@ -88,7 +86,7 @@ function LeftNews() {
                             줄은 최대 3줄이고  ㅇㅇㅇㅇㅇㅇ더 넘어가면 ... 처리ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
                         </Card.Text>
                         <Button variant="primary">
-                            <Link to="/News/NewsView" style={{ color: 'white' }}>기사 더보기</Link>
+                            <Link to={`/news/article/${data[3].id}`} style={{ color: 'white' }}>기사 더보기</Link>
                         </Button>
                     </Card.Body>
                 </Card>
@@ -122,7 +120,7 @@ function LeftNews() {
                             {data[4].subtitle}
                         </Card.Text>
                         <Button variant="primary">
-                            <Link to="/left2" style={{ color: 'white' }}>기사 더보기</Link>
+                            <Link to={`/news/article/${data[4].id}`} style={{ color: 'white' }}>기사 더보기</Link>
                         </Button>
                     </Card.Body>
                 </Card>

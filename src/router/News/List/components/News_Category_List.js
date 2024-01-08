@@ -10,7 +10,7 @@ const News_Category_List = ({ listNews }) => {
             <hr/>
             <div className="row">
                 <div className="col-md-1">
-                    <img src={newsItem.image} className="img-fluid" alt="news-thumbnail" />
+                    <img src={newsItem.image} className="img-fluid" alt="news-thumbnail" style={{height: '64px'}} />
                 </div>
                 <div className="col-md-10">
                     <div className="fw-bold">{newsItem.title}</div>

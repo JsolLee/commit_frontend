@@ -62,7 +62,7 @@ function middleNews() {
 
             <Carousel className='active'>
                 <Carousel.Item style={{ border: '1px solid #ced4da' }}>
-                    <Link to="/mainNews1">
+                    <Link to={`/news/article/${data[0].id}`}>
                         <img src={data[0].image}
                             style={{ width: '768px', height: "430px" }} />
                         <Carousel.Caption>
@@ -72,7 +72,7 @@ function middleNews() {
                     </Link>
                 </Carousel.Item>
                 <Carousel.Item style={{ border: '1px solid #ced4da' }}>
-                    <Link to="/mainNews2">
+                    <Link to={`/news/article/${data[1].id}`}>
                         <img src={data[1].image}
                             style={{ width: '768px', height: "430px" }} />
                         <Carousel.Caption>
@@ -82,7 +82,7 @@ function middleNews() {
                     </Link>
                 </Carousel.Item>
                 <Carousel.Item style={{ border: '1px solid #ced4da' }}>
-                    <Link to="/mainNews3">
+                    <Link to={`/news/article/${data[2].id}`}>
                         <img src={data[2].image}
                             style={{ width: '768px', height: "430px" }} />
                         <Carousel.Caption style={{ color: 'white' }}>

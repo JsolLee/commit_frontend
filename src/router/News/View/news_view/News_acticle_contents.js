@@ -23,7 +23,7 @@ const News_acticle_contents = ({ image, content, title }) => {
     <article className="container" id="news_view_content" name="news_view_content">
       <div className="row">
         <div className="col-12 mb-3">
-          <img src={image} className="img-fluid d-block mx-auto" style={{ cursor : 'pointer' }} alt={title} />
+          <img src={image} className="img-fluid d-block mx-auto" style={{ height: '525px' }} alt={title} />
           <div className="text-center"><small>관련 사진</small></div>
         </div>
         <div className="col-12">{content}</div>

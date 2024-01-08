@@ -25,11 +25,11 @@ const News_acticle_related = ({ relatedNews }) => {
           {relatedNews.map((news, index) => (
             <div key={index} className="col">
               <div className="card">
-                  <img src={news.image} className="card-img-top" alt={news.title} />
+                <img src={news.image} className="card-img-top" alt={news.title} style={{ height: '202px' }} />
                 <div className="card-body">
                   <h5 className="card-title">{news.title}</h5>
                   <p className="card-text">
-                    {news.content.length > 20 ? news.content.substring(0, 20) + "..." : news.content}
+                    {news.content.replace(/<\/?p[^>]*>/g, "").replace(/&nbsp;/g, "").substring(0, 20) + "..."}
                   </p>
                 </div>
                 <Link to={`/news/article/${news.id}`} className="stretched-link">
@@ -51,7 +51,7 @@ News_acticle_related.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string,
-      image: PropTypes.string 
+      image: PropTypes.string
     })
   ).isRequired
 }
