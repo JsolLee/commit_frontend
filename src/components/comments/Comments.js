@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import use_Get_Comment from './hooks/use_Get_Comment'
 import use_Post_Comment from './hooks/use_Post_Comment'
@@ -9,16 +9,20 @@ import Comments_view from './components/Comments_view'
 
 const Comments = ({ newsId }) => {
     const { postComment } = use_Post_Comment()
-    const { comments, loading: commentsLoading, refetch: refetchComments } = use_Get_Comment(newsId)
+
+    const { comments, loading: commentsLoading, refetch: refetchComments  } = use_Get_Comment(newsId)
 
     const [newComment, setNewComment] = useState("")
 
-    useEffect(() => { if (!commentsLoading) { refetchComments() } }, [comments])
-
-    const handleCommentSubmit = async (e) => {
-        e.preventDefault()
+    const handleCommentSubmit = async (event) => {
+        event.preventDefault()
+        const sessionId = sessionStorage.getItem("member_id")
+        if (!sessionId) {
+            alert('로그인이 필요합니다.')
+            return
+          }
         if (newComment) {
-            await postComment({ newsId, content: newComment })
+            await postComment({ newsId, content: newComment.trim() })
             setNewComment("")
             refetchComments()
         }
