@@ -32,7 +32,7 @@ function Login() {
   };
   return (
     <div className="Login member">
-      <Form className='login' ref={formRef} onSubmit={handleSubmit}>
+      <Form className='login' validated={false} ref={formRef} onSubmit={handleSubmit}>
         <h1 className='text-center'>로그인</h1>
         <br />
         <Form.Group className="mb-3" controlId="formGroupEmail">

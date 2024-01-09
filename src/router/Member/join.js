@@ -44,27 +44,39 @@ function Join() {
   };
   return (
     <div className="Join member">
-      <Form onSubmit={handleSubmit} method='POST' action='/join'>
+      <Form className='join' onSubmit={handleSubmit} method='POST' action='/join'>
         <h1 className='text-center'>회원가입</h1>
         <br />
         <Form.Group controlId="formGroupId">
           <Form.Label>아이디</Form.Label>
           <Form.Control type="text" placeholder="아이디를 입력하세요." onChange={e => setMemberId(e.target.value)} required/>
+          <Form.Control.Feedback type="invalid">
+            아이디를 입력해주세요.
+          </Form.Control.Feedback>        
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>비밀번호</Form.Label>
           <Form.Control type="password" placeholder="비밀번호를 입력하세요." onChange={e => setMemberPw(e.target.value)} required/>
+          <Form.Control.Feedback type="invalid">
+            비밀번호를 입력해주세요.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
           <Form.Label>이메일</Form.Label>
           <Form.Control type="email" placeholder="이메일을 입력하세요." onChange={e => setEmail(e.target.value)} required/>
+          <Form.Control.Feedback type="invalid">
+            이메일을 입력해주세요.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formBasicNickName">
           <Form.Label>닉네임</Form.Label>
           <Form.Control type="text" placeholder="닉네임을 입력하세요." onChange={e => setNickName(e.target.value)} required/>
+          <Form.Control.Feedback type="invalid">
+            닉네임을 입력해주세요.
+          </Form.Control.Feedback>
         </Form.Group>
         <br />
         <Button variant="primary" type="submit">
