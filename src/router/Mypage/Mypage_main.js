@@ -39,7 +39,7 @@ const Mypage_main = () => {
         <Route path="/" element={<My_page userNickname={data.nickName} userEmail={data.email}/>} />
         <Route path="/User_check" element={<User_check userId={data.memberId} userPw={data.memberPw}/>} />
         <Route path="/Name_edit" element={<Name_edit userNickname={data.nickName}/>} />
-        <Route path="/User_edit" element={<User_edit />} />
+        <Route path="/User_edit" element={<User_edit userId={data.memberId} userPw={data.memberPw} />} />
         <Route path="/User_out" element={<User_out userNickname={data.nickName} userId={data.memberId} userEmail={data.email}/>} />
         <Route path="/My_activity" element={<My_activity />} />
         <Route path="/My_like" element={<My_like />} />

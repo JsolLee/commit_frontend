@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import './Header.css'
@@ -68,7 +68,7 @@ const Header = (props) => {
           <Nav>
             {(props.isLogin === true) ? (
               <>
-                <Nav.Link><Link to='/Mypage'>{sessionStorage.getItem("nick_name")}의 마이페이지</Link></Nav.Link>
+                <Nav.Link><Link to='/Mypage'>마이페이지</Link></Nav.Link>
                 <Nav.Link onClick={logOut}>로그아웃</Nav.Link>
               </>
             ) : (

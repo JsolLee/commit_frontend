@@ -22,10 +22,12 @@ function Login() {
         // setCookie('id', res.data.memberId, { expires }); // 쿠키에 아이디 저장
         sessionStorage.setItem("member_id", res.data.memberId);
         sessionStorage.setItem("nick_name", res.data.nickName);
+        sessionStorage.setItem("members_id", res.data.id)
         document.location.href = "/";
       })
-      .catch(() => {
-        alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
+      .catch((err) => {
+        // alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
+        alert(err.response.data);
       });
   };
   return (
