@@ -18,6 +18,7 @@ const Comments_view = ({ comments }) => {
                     <div className="card p-4">
                         <Comments_view_content comment={comment} />
                     </div>
+                    <br />
 
                     {/* 대댓글을 효율적으로 렌더링합니다. */}
                     {repliesMap[comment.id]?.map((subComment) => (

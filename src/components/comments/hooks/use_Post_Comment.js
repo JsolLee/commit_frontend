@@ -1,17 +1,20 @@
 import axios from 'axios'
 
 const use_Post_Comment = () => {
+
     const postComment = async (commentData) => {
-        const sessionId = sessionStorage.getItem("member_id") // 세션 스토리지에서 사용자 ID 가져오기
-        if (!sessionId) {
+        // sessionStorage에서 members_id 값을 가져오기
+        const membersId = sessionStorage.getItem("members_id")
+        if (!membersId) {
             console.error("User is not logged in")
             return // 로그인하지 않은 경우 작업 중단
         }
 
         try {
+            // 서버로 POST 요청을 보내는 부분에서 members_id 값을 사용
             const response = await axios.post('/news/certification/comments', {
                 ...commentData,
-                memberId: sessionId // 여기에 memberId를 추가
+                membersId: membersId // members_id 값을 사용하여 요청 보냄
             })
             return response.data
         } catch (error) {
@@ -23,3 +26,4 @@ const use_Post_Comment = () => {
 }
 
 export default use_Post_Comment
+
