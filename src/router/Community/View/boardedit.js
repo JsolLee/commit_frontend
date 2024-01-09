@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button,InputGroup } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
 import FileUpload from './fileupload.js';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const BoardEdit = () => {
   // 게시판 제목, 내용, 카테고리
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('전체글');
+  const [category, setCategory] = useState('newstart');
 
   // 선택한 게시물의 원본 내용 GET
   useEffect(() => {
@@ -112,11 +112,11 @@ const boardedit = async () => {
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
             <Form.Select onChange={changeCategory} value={category} >
-              <option value="구인/구직">구인/구직</option>
-              <option value="이직/신입">이직/신입</option>
-              <option value="면접">면접</option>
-              <option value="자소서">자소서</option>
-              <option value="합격자조언">합격자조언</option>
+              <option value="newstart">이직/신입</option>
+              <option value="resume">자소서</option>
+              <option value="review">합격자조언</option>
+              <option value="recruit">구인/구직</option>
+              <option value="interview">면접</option>
             </Form.Select><br></br>
           </InputGroup> 
             <InputGroup>
@@ -127,9 +127,15 @@ const boardedit = async () => {
         <FileUpload />
 
         <Form.Group className="mb-4">
-          <ReactQuill 
+          {/* <ReactQuill 
             style = {{ height: '400px'}}
-            theme="snow" onChange={changeContent} value={content} />
+            theme="snow" onChange={changeContent} value={content} /> */}
+          <Form.Control
+            as="textarea"
+            style={{ height: '400px' }}
+            value={content}
+            onChange={(e) => changeContent(e.target.value)}
+          />
         </Form.Group><br/>
 
         <Row className="justify-content-start">

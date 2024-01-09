@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import { Link , useNavigate} from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css'; // Quill 스타일을 불러옴
 import FileUpload from './fileupload.js';
 
 const BoardWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('구인/구직');
+  const [selectedCategory, setSelectedCategory] = useState('newstart');
   const [showAlert, setShowAlert] = useState(false);
   const [isContentEmpty, setIsContentEmpty] = useState(false); // 추가
 
@@ -16,6 +16,10 @@ const BoardWrite = () => {
 
   const boardTitle = (e) => {
     setTitle(e.target.value);
+  };
+
+  const boardContent = (e) => {
+    setContent(e.target.value);
   };
 
   const category = (selected) => {
@@ -75,11 +79,11 @@ const BoardWrite = () => {
           <InputGroup>
             <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
             <Form.Select value={selectedCategory} onChange={(e) => category(e.target.value)}>
-              <option value="구인/구직">구인/구직</option>
-              <option value="이직/신입">이직/신입</option>
-              <option value="면접">면접</option>
-              <option value="자소서">자소서</option>
-              <option value="합격자조언">합격자조언</option>
+              <option value="newstart">이직/신입</option>
+              <option value="resume">자소서</option>
+              <option value="review">합격자조언</option>
+              <option value="recruit">구인/구직</option>
+              <option value="interview">면접</option>
             </Form.Select><br></br>
           </InputGroup>
 
@@ -91,9 +95,13 @@ const BoardWrite = () => {
           <FileUpload />
 
           <Form.Group className="mb-4">
-            <ReactQuill
+            {/* <ReactQuill
               style={{ height: '400px' }}
-              theme="snow" value={content} onChange={setContent}/>
+              theme="snow" value={content} onChange={setContent}/> */}
+              <Form.Control
+              as="textarea"
+              style={{ height: '400px' }}
+              value={content} onChange={boardContent}/>
           </Form.Group><br></br>
 
           <Row className="justify-content-start mt-3">

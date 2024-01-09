@@ -129,7 +129,8 @@ return (
                             <Chat></Chat>{boardList.comments}
                         </Link>
                     </td>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.membersId}</td>
+                    {/* <td className="text-center" style={{ fontSize: '20px' }}>{boardList.membersId}</td> */}
+                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.nickname}</td>
                     <td className="text-center" style={{ fontSize: '20px' }}>{moment(boardList.createDate).format('YYYY-MM-DD')}</td>
                 </tr>
             ))}

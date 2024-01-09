@@ -64,7 +64,6 @@ const BoardDetail = () => {
       const response = await axios.post(`http://localhost:9999/community/like/${id}/${board.membersId}`);
       if (response.status === 200) {
         alert("좋아요를 눌렀습니다!");
-        getBoardDetail();
       }
     } catch (error) {
       console.error("좋아요 실패", error);
@@ -76,7 +75,7 @@ const BoardDetail = () => {
       <main className="mt-5 pt-5">
         <Container fluid className="px-4">
           <div className="text-center">
-            <h1>Community</h1>
+            <h1>{board.category}</h1>
           </div>
           <hr />
           <Breadcrumb>
@@ -84,7 +83,7 @@ const BoardDetail = () => {
             <Breadcrumb.Item href="/Community">
               Community
             </Breadcrumb.Item>
-            <Breadcrumb.Item href="/Community/boardlist">전체글</Breadcrumb.Item>
+            <Breadcrumb.Item href="/Community/boardlist">{board.category}</Breadcrumb.Item>
           </Breadcrumb>
 
           <Card className="mb-4">
@@ -103,7 +102,7 @@ const BoardDetail = () => {
                       <Col className="text-end">
                         <Form.Label htmlFor="title" className="form-label"
                           style={{ fontWeight: 'bold' }}>
-                          작성자: {board.membersId}
+                          작성자: {board.nickname}
                         </Form.Label>
                       </Col>
                     </Row>
