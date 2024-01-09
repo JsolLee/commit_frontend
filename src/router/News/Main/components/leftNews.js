@@ -83,7 +83,6 @@ function LeftNews() {
                             '-webkit-line-clamp': '3' // 줄 바꿈이 발생할 때 "..."이 생기는 문제를 해결하기 위한 추가 스타일
                         }}>
                             {data[3].subtitle}<br />
-                            줄은 최대 3줄이고  ㅇㅇㅇㅇㅇㅇ더 넘어가면 ... 처리ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
                         </Card.Text>
                         <Button variant="primary">
                             <Link to={`/news/article/${data[3].id}`} style={{ color: 'white' }}>기사 더보기</Link>

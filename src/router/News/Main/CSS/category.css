@@ -2,7 +2,7 @@
     position: relative;
     margin: 100px auto;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1350px;
     margin-top: 64px;
 }
 
@@ -17,6 +17,7 @@
 }
 
 .NEWS2_content {
+    
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -35,7 +36,7 @@
     width: 270px;
     margin: 0;
     padding: 0;
-
+    
     min-width: 224px;
 
 }

@@ -16,16 +16,20 @@ import Category from '../components/category';
 function News() {
   return (
     <div>
-      <br/>
+      <br />
       <div className='total'>
         <div className='main'>
           <LeftNews />
           <MiddleNews />
           <RightNews />
         </div>
+        <br/>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <hr style={{ width: '93%' }} />
+        </div>
         <Category />
       </div>
-      
+
     </div>
 
   );

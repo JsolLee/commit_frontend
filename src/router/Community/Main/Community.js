@@ -31,7 +31,7 @@ function Community() {
 
     console.log(data)
 
-    // "main" 카테고리에 대한 작업을 수행하는 코드
+    // "전체" 카테고리에 대한 작업을 수행하는 코드
     const sortedAllData = data.sort((a, b) => {
         const dateA = new Date(a.createDate);
         const dateB = new Date(b.createDate);
@@ -40,36 +40,31 @@ function Community() {
 
     const latestData = sortedAllData.slice(0, 6);
 
-    // "join" 카테고리에 대한 작업을 수행하는 코드
-    const joinData = data.filter(item => item.category === "join");
+    // "recruit" 카테고리에 대한 작업을 수행하는 코드
+    const recruitData = data.filter(item => item.category === "recruit");
 
-    // "ps" 카테고리에 대한 작업을 수행하는 코드
-    const psData = data.filter(item => item.category === "ps");
+    // "resume" 카테고리에 대한 작업을 수행하는 코드
+    const resumeData = data.filter(item => item.category === "resume");
 
-    // "advice" 카테고리에 대한 작업을 수행하는 코드
-    const adviceData = data.filter(item => item.category === "advice");
+    // "review" 카테고리에 대한 작업을 수행하는 코드
+    const reviewData = data.filter(item => item.category === "review");
 
-    // "job" 카테고리에 대한 작업을 수행하는 코드
-    const jobData = data.filter(item => item.category === "job");
+    // "newstart" 카테고리에 대한 작업을 수행하는 코드
+    const newstartData = data.filter(item => item.category === "newstart");
 
-    // "etc" 카테고리에 대한 작업을 수행하는 코드
-    const etcData = data.filter(item => item.category === "etc");
+    // "interview" 카테고리에 대한 작업을 수행하는 코드
+    const interviewData = data.filter(item => item.category === "interview");
 
 
     //  게시글 날짜 순 정렬
     const sortedMainData = latestData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-    const sortedJoinData = joinData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-    const sortedPsData = psData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-    const sortedAdviceData = adviceData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-    const sortedJobData = jobData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-    const sortedEtcData = etcData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortedrecruitData = recruitData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortedresumeData = resumeData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortedreviewata = reviewData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortednewstartData = newstartData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+    const sortedinterviewData = interviewData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
 
-    console.log(latestData)
-    console.log(joinData)
-    console.log(psData)
-    console.log(adviceData)
-    console.log(etcData)
-    console.log(jobData)
+    
 
     return (
         <div className="total">
@@ -107,7 +102,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {sortedJoinData.map((data) => (
+                            {sortednewstartData.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">
@@ -136,7 +131,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {sortedPsData.map((data) => (
+                            {sortedresumeData.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">
@@ -163,7 +158,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {sortedAdviceData.map((data) => (
+                            {sortedreviewata.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">
@@ -192,7 +187,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {sortedJobData.map((data) => (
+                            {sortedrecruitData.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">
@@ -219,7 +214,7 @@ function Community() {
                     </div>
                     <div className="item_detail">
                         <div>
-                            {sortedEtcData.map((data) => (
+                            {sortedinterviewData.map((data) => (
                                 <li key={data.id}>
                                     <Link to={"/Community/boarddetail"} className="link" onmousedown="SEARCH.Main.gaEvent(www.naver.com)">
                                         <span className="txt_subject">

@@ -83,17 +83,11 @@ function newsCategory() {
 
     return (
         <section className="NEWS2">
-            
             <h2 className="NEWS2_title">섹션</h2>
             <div className="NEWS2_content">
                 <div className="col2">
                     <h3 className="sub-tit">
                         <span>전체</span>
-                        <Link to='/news/category/infotech' className="innerlink0 more">
-                            <ArrowRightShort className='arrow' width={25} height={25}>
-                                <span className="blind">더보기</span>
-                            </ArrowRightShort>
-                        </Link>
                     </h3>
                     <figure className="img-box2">
                         <Link to={`/news/article/${latestAllData[0].id}`}>
@@ -125,7 +119,7 @@ function newsCategory() {
                 <div className="col2">
                     <h3 className="sub-tit">
                         <span>InfoTech</span>
-                        <Link to='/economy' className="innerlink0 more">
+                        <Link to='category/infotech' className="innerlink0 more">
                             <ArrowRightShort className='arrow' width={25} height={25}>
                                 <span className="blind">더보기</span>
                             </ArrowRightShort>
@@ -161,7 +155,7 @@ function newsCategory() {
                 <div className="col2">
                     <h3 className="sub-tit">
                         <span>Company</span>
-                        <Link to={`/news/article/${latestCompanyData[0].id}`} className="innerlink0 more">
+                        <Link to='category/company' className="innerlink0 more">
                             <ArrowRightShort className='arrow' width={25} height={25}>
                                 <span className="blind">더보기</span>
                             </ArrowRightShort>
@@ -197,7 +191,7 @@ function newsCategory() {
                 <div className="col2">
                     <h3 className="sub-tit">
                         <span>Conference</span>
-                        <Link to='/International' className="innerlink0 more">
+                        <Link to='category/conference' className="innerlink0 more">
                             <ArrowRightShort className='arrow' width={25} height={25}>
                                 <span className="blind">더보기</span>
                             </ArrowRightShort>
@@ -231,6 +225,8 @@ function newsCategory() {
                     </ul>
                 </div>
             </div>
+            <br />
+            <br />
         </section>
     )
 }

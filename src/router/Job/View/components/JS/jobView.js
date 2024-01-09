@@ -178,7 +178,7 @@ function jobView() {
           <Col>
             <Row className='align-items-center'>
               <Col className='pb-1'>
-                <div><a>{data.companyname}</a></div>
+                <div>{data.companyname}</div>
               </Col>
             </Row>
           </Col>
@@ -188,7 +188,7 @@ function jobView() {
         </Row>
         <Row xs='auto' className='position-absolute end-0 text-secondary'>
           <Col>
-            <BsPeopleFill className='mb-1' /> 조회수 216
+            <BsPeopleFill className='mb-1' /> 조회수 {data.viewcount}
           </Col>
           <Col>
             <NavDropdown id='share' title={<><IoShareSocialOutline className='mb-1' id='share' /> 공유</>}>
