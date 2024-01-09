@@ -3,6 +3,7 @@ import React from 'react'
 import { MdPostAdd } from "react-icons/md"
 
 const Comments_write = ({ onCommentChange, onCommentSubmit, newComment }) => {
+    
     return (
         <section className="container">
             <div className="card-body">

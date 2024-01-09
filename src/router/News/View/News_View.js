@@ -18,7 +18,7 @@ import News_acticle_newest from './news_view/News_acticle_newest.js'
 import News_acticle_popular from './news_view/News_acticle_popular.js'
 
 // 댓글
-import Comments from '../comments/Comments.js'
+import Comments from '../../../components/comments/Comments.js'
 
 const News_View = ({ news, popularNews, latestNews, relatedNews }) => {
 
