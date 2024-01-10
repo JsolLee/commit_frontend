@@ -9,11 +9,16 @@ import './boardlist.css'
 import axios from 'axios';
 import moment from 'moment';
 
+import { useParams } from 'react-router-dom';
+
+
 //상단 사진 부분
-const CommunityHeader = () => (
+const CommunityHeader = ({ category }) => (
     <div className="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div className="container text-center py-5">
-            <h1 className="display-2 text-white fw-bold mb-4 animated slideInDown">Community</h1>
+            <h1 className="display-2 text-white fw-bold mb-4 animated slideInDown">
+                {category ? category.toUpperCase() : 'COMMUNITY'}
+            </h1>
         </div>
     </div>
 );
@@ -23,15 +28,25 @@ const BoardList = () => {
     const [boardList, setBoardList] = useState([]);
     const [page, setPage] = useState(1); 
 
-    //페이징 기능
+    const { category } = useParams();
+
+    // 페이징 기능
     const getBoardList = useCallback(async (pageNumber) => {
         try {
-            const response = await axios.get(`http://localhost:9999/community/boardlist?page=${pageNumber}`);
+            let url = `http://localhost:9999/community/boardlist?page=${pageNumber}`;
+
+            if (category) {
+                url = `http://localhost:9999/community/boardlist/${category}?page=${pageNumber}`;
+            }
+
+            const response = await axios.get(url);
+            console.log(url)
             setBoardList(response.data.content);
         } catch (error) {
             console.error('에러 메세지', error);
         }
-    }, [page]);
+    }, [page, category]);
+    
     
     useEffect(() => {
         getBoardList(page);
@@ -71,10 +86,25 @@ const BoardList = () => {
         }
     }, [searchData]);
 
+  // 글 쓰기 버튼 클릭 시 이동 처리 함수
+  const buttonClick = () => {
+    // 세션 값이 있는지 확인
+    const storedSession = sessionStorage.getItem('member_id');
+
+    // 세션 값이 있으면 글 쓰기 페이지로 이동
+    if (storedSession) {
+      window.location.href = "/Community/boardwrite";
+    } else {
+      // 세션 값이 없으면 로그인 페이지로 이동
+      window.location.href = "/login";
+    }
+  };
+
+
 //실제 렌더링 되는 부분
 return (
     <>
-    <CommunityHeader />            
+    <CommunityHeader category={category} />        
         <Container>
 
         <div className="d-flex justify-content-between align-items-center mb-3">                
@@ -119,8 +149,8 @@ return (
                 <tbody>
                 {Array.isArray(boardList) && boardList.map((boardList) => (
                 <tr key={boardList.id}>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.id}</td>
-                    <td className="text-center" style={{ fontSize: '20px' }}>
+                    <td className="text-center" style={{ fontSize: '17px' }}>{boardList.id}</td>
+                    <td className="text-center" style={{ fontSize: '17px' }}>
                         <Link to={`/community/boarddetail/${boardList.id}`} style={{ color: "black", textDecoration: "none" }}>
                             {boardList.title}
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -130,18 +160,20 @@ return (
                         </Link>
                     </td>
                     {/* <td className="text-center" style={{ fontSize: '20px' }}>{boardList.membersId}</td> */}
-                    <td className="text-center" style={{ fontSize: '20px' }}>{boardList.nickname}</td>
-                    <td className="text-center" style={{ fontSize: '20px' }}>{moment(boardList.createDate).format('YYYY-MM-DD')}</td>
+                    <td className="text-center" style={{ fontSize: '17px' }}>{boardList.nickname}</td>
+                    <td className="text-center" style={{ fontSize: '17px' }}>{moment(boardList.createDate).format('YYYY-MM-DD')}</td>
                 </tr>
             ))}
         </tbody>
     </Table>
 
-    <div className="d-flex justify-content-end mt-3">
-        <Link to="/Community/boardwrite">
-            <Button variant="primary">글쓰기</Button>
-        </Link>
-    </div>            
+     {/* 글 쓰기 버튼 */}
+     <div className="d-flex justify-content-end mt-3">
+          <Button variant="primary" onClick={buttonClick}>
+            글쓰기
+          </Button>
+     </div>
+
     </Container>
 
     <div className="d-flex justify-content-center">

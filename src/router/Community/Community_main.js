@@ -24,7 +24,8 @@ const Communit_main = () => {
         <div>
             <Routes>
                 <Route path='/' element={<Community/>} />
-                <Route path="/boardlist" element={<BoardList />} />
+                <Route path="/boardlist/" element={<BoardList />} />
+                <Route path="/boardlist/:category" element={<BoardList />} />
                 <Route path="/boardedit/:id" element={<BoardEdit />} />
                 <Route path="/boardwrite" element={<BoardWrite />} />
                 <Route path="/boarddetail/:id" element={<BoardDetail />} />

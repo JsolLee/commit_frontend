@@ -26,6 +26,44 @@ const BoardWrite = () => {
     setSelectedCategory(selected);
   };
 
+  //세션 설정
+  // const getMemberdsId = sessionStorage.getItem('members_id'); 
+  // const boardWrite = async () => {
+  //   // content 값이 null 또는 빈 문자열인 경우 alert를 띄우고 함수 종료
+  //   if (!content || content.trim() === '') {
+  //     setIsContentEmpty(true);
+  //     alert('내용을 입력해주세요.');
+  //     return;
+  //   }
+
+  //   try {
+  //     console.log(getMemberdsId)
+  //     const response = await fetch('http://localhost:9999/community/boardwrite', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         title,
+  //         content,
+  //         category: selectedCategory,
+  //         memberdsId: getMemberdsId
+  //       }),
+  //     });
+  
+  //     if (response.ok) {
+  //       // 성공적으로 글이 등록되었을 때의 처리
+  //       setShowAlert(true);
+  //       navigate("/Community/boardlist");
+  //     } else {
+  //       // 실패했을 때의 처리
+  //       console.error('글 등록 실패');
+  //     }
+  //   } catch (error) {
+  //     console.error('에러 발생', error);
+  //   }
+  // };
+
   const boardWrite = async () => {
     // content 값이 null 또는 빈 문자열인 경우 alert를 띄우고 함수 종료
     if (!content || content.trim() === '') {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Card, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -17,7 +17,7 @@ const BoardDetail = () => {
     try {
       const response = await axios.get(`http://localhost:9999/community/boarddetail/${id}`);
       if (response.status == 200) {
-        console.log("get 성공")   
+        console.log("get 성공")
         setBoardDetail(response.data);
       }
     }
@@ -47,7 +47,7 @@ const BoardDetail = () => {
   //글 삭제 함수
   const boarddelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:9999/community/boarddelete/${id}`);
+      const response = await axios.post(`http://localhost:9999/community/boarddelete/${id}`);
       if (response.status == 200) {
         alert("게시글을 성공적으로 삭제했습니다.");
         navigate("/Community/boardlist");
@@ -70,12 +70,26 @@ const BoardDetail = () => {
     }
   };
 
+  //로그인, 비로그인 확인
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // 클라이언트 세션 스토리지에서 값을 가져와 인증 상태를 확인
+    const storedSession = sessionStorage.getItem('member_id'); 
+
+    if (storedSession) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
   return (
     <Container>
       <main className="mt-5 pt-5">
         <Container fluid className="px-4">
           <div className="text-center">
-            <h1>{board.category}</h1>
+            <h1>{board.category ? board.category.toUpperCase() : ''}</h1>
           </div>
           <hr />
           <Breadcrumb>
@@ -83,7 +97,7 @@ const BoardDetail = () => {
             <Breadcrumb.Item href="/Community">
               Community
             </Breadcrumb.Item>
-            <Breadcrumb.Item href="/Community/boardlist">{board.category}</Breadcrumb.Item>
+            <Breadcrumb.Item href={`/Community/boardlist/${board.category}`}>{board.category}</Breadcrumb.Item>
           </Breadcrumb>
 
           <Card className="mb-4">
@@ -157,7 +171,8 @@ const BoardDetail = () => {
                 {/* 수정 및 삭제 버튼 */}
                 <div className="position-relative">
                   <div className="position-absolute bottom-0 start-0">
-                    <Link to={`/Community/boardedit/${board.id}`} style={{ color: "black", textDecoration: "none" }}>
+
+                    {/* <Link to={`/Community/boardedit/${board.id}`} style={{ color: "black", textDecoration: "none" }}>
                       <Button onClick={boardedit} variant="outline-primary" className="mb-2">
                         수정
                       </Button>&nbsp;
@@ -165,7 +180,21 @@ const BoardDetail = () => {
 
                     <Button onClick={boarddelete} variant="danger" className="mb-2">
                       삭제
-                    </Button>
+                    </Button> */}
+
+                    {isAuthenticated && (
+                      <>
+                        <Link to={`/Community/boardedit/${board.id}`} style={{ color: "black", textDecoration: "none" }}>
+                          <Button onClick={boardedit} variant="outline-primary" className="mb-2">
+                            수정
+                          </Button>&nbsp;
+                        </Link>
+
+                        <Button onClick={boarddelete} variant="danger" className="mb-2">
+                          삭제
+                        </Button>
+                      </>
+                    )}
 
 
                   </div>
