@@ -1,6 +1,6 @@
-import React from "react";
-import { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { ButtonGroup, ToggleButton, Form } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/Mypage.css";
@@ -9,14 +9,50 @@ const My_like = () => {
   const [radioValue, setRadioValue] = useState('1');
   const [radioId, setRadioId] = useState('like-news');
 
+  //뉴스
+  const [myNews, setMyNews] = useState([
+    { id: '' },
+    { title: '' },
+    { newsId: 0 } // 상세 페이지 url
+  ]);
+
+  // 커뮤니티
+  const [myCommunity, setMyCommunity] = useState([
+    { id: '' },
+    { title: '' },
+    { boardId: 0 } // 상세 페이지 url
+  ]);
+
   const radios = [
     { name: '좋아요 한 뉴스', value: '1', id: 'like-news' },
     { name: '좋아요 한 커뮤니티 글', value: '2', id: 'like-community' }
   ];
 
-  const myNews = ['내가 좋아하는 뉴스1', '내가 좋아하는 뉴스2', '내가 좋아하는 뉴스3'];
-  const myCommunity = ['내가 좋아하는 커뮤니티 글1', '내가 좋아하는 커뮤니티 글2', '내가 좋아하는 커뮤니티 글3'];
+  useEffect(() => {
+     // 좋아요한 뉴스
+    axios.get('/myNewsLike')
+      .then(res => {
+        const likeNews = res.data.map(newsLike => ({
+          id: newsLike.id,
+          title: newsLike.news.title,
+          newsId: newsLike.newsId
+        }))
+        setMyNews(likeNews);
+      })
+      .catch(err => console.log(err))
 
+      // 좋아요 한 커뮤니티 글
+      axios.get('/myBoardLike')
+      .then(res => {
+        const likeBoard = res.data.map(boardLike => ({
+          id: boardLike.id,
+          title: boardLike.board.title,
+          boardId: boardLike.boardId
+        }))
+        setMyCommunity(likeBoard);
+      })
+      .catch(err => console.log(err))
+  }, [])
 
   return (
     <div className="activity-main-wrap">
@@ -53,13 +89,13 @@ const My_like = () => {
           </li>
           <Form>
             <li className="rounded-bottom">
-              {myNews.map((type, idx) => (
+              {myNews.map((type) => (
                 <li key={`default-${type}`} className="list-group-item">
                   <Form.Check
                     className="form-check-label"
                     type={`checkbox`}
-                    id={`like-news${idx}`}
-                    label={<Link to={`/Mypage`}>{`${type}`}</Link>}
+                    id={`like-news${type.id}`}
+                    label={<Link to={`/news/article/${type.newsId}`}>{`${type.title}`}</Link>}
                   />
                 </li>
               ))}
@@ -76,13 +112,13 @@ const My_like = () => {
           </li>
           <Form>
             <li className="rounded-bottom">
-              {myCommunity.map((type, idx) => (
+              {myCommunity.map((type) => (
                 <li key={`default-${type}`} className="list-group-item">
                   <Form.Check
                     className="form-check-label"
                     type={`checkbox`}
-                    id={`like-community${idx}`}
-                    label={<Link to={`/Mypage`}>{`${type}`}</Link>}
+                    id={`like-community${type.id}`}
+                    label={<Link to={`/community/boarddetail/${type.boardId}`}>{`${type.title}`}</Link>}
                   />
                 </li>
               ))}
