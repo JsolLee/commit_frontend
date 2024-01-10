@@ -27,12 +27,10 @@ function App() {
     if (sessionStorage.getItem("member_id") === null) {
       // sessionStorage 에 members_id 라는 key 값으로 저장된 값이 없다면
       isLogin;
-      console.log("App.js의 로그인 값이 ", isLogin)
     } else {
       // sessionStorage 에 members_id 라는 key 값으로 저장된 값이 있다면
       // 로그인 상태 변경
       setIsLogin(true);
-      console.log("App.js의 로그인 값이 ", isLogin)
     }
   }, [isLogin]);
 
