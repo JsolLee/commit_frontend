@@ -15,9 +15,8 @@ const My_activity = () => {
   ];
 
   const [myContent, setMyContent] = useState([
-    { id: '' },
-    { title: '' }, // 뉴스 제목
-    { newsId: 0 } // 상세 페이지 url
+    { title: '' }, // 커뮤니티 제목
+    { boardId: 0 } // 커뮤니티 아이디 ,상세 페이지 url
   ]);
 
   const [myComment, setMyComment] = useState([
@@ -32,9 +31,8 @@ const My_activity = () => {
     .then(res => {
       // board.title 값들을 추출하여 새 배열로 만들기
       const content = res.data.map(boardContent => ({
-        id: boardContent.id,
-        title: boardContent.board.title,
-        boardId: boardContent.boardId
+        title: boardContent.title,
+        boardId: boardContent.id
       }))
       setMyContent(content);
     })
@@ -46,6 +44,7 @@ const My_activity = () => {
         const comment = res.data.map(newsComment => ({
           id: newsComment.id,
           title: newsComment.news.title,
+          content: newsComment.content,
           newsId: newsComment.newsId
         }))
         setMyComment(comment);
@@ -94,7 +93,7 @@ const My_activity = () => {
                     <Form.Check
                       className="form-check-label"
                       type={`checkbox`}
-                      id={`my-content${type.id}`}
+                      id={`my-content${type.boardId}`}
                       label={<Link to={`/community/boarddetail/${type.boardId}`}>{`${type.title}`}</Link>}
                       />
                   </li>
@@ -118,7 +117,7 @@ const My_activity = () => {
                       className="form-check-label"
                       type={`checkbox`}
                       id={`my-comment${type.id}`}
-                      label={<Link to={`/news/article/${type.newsId}`}>{`${type.title}`}</Link>}
+                      label={<Link to={`/news/article/${type.newsId}`}>{`${type.content} ( ${type.title})`}</Link>}
                       />
                   </li>
                 ))}
