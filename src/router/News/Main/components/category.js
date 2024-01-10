@@ -59,10 +59,6 @@ function newsCategory() {
     const companyData = data.filter(item => item.category === "company");
     const conferenceData = data.filter(item => item.category === "conference");
 
-    console.log(infotechData)
-    console.log(companyData)
-    console.log(conferenceData)
-
     // 전체, 카테고리 별 데이터 최신 순으로 정렬
     const sortAllData = data.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     const sortedInfotechData = infotechData.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
@@ -74,12 +70,6 @@ function newsCategory() {
     const latestCompanyData = sortedCompanyData.slice(0, 3);
     const latestConferenceData = sortedConferenceData.slice(0, 3);
     const latestAllData = sortAllData.slice(0, 3);
-
-    console.log(latestInfotechData)
-    console.log(latestCompanyData)
-    console.log(latestConferenceData)
-    console.log(latestAllData)
-
 
     return (
         <section className="NEWS2">

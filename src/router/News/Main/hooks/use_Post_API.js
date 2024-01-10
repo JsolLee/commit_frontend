@@ -2,8 +2,8 @@ import { useState } from 'react'
 import axios from 'axios'
 
 const use_Post_API = () => {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [loading2, setLoading] = useState(false)
+    const [error2, setError] = useState(null)
 
     const sendLike = async (id) => {
         try {
@@ -21,7 +21,7 @@ const use_Post_API = () => {
 
     // post : 신고 메서드
 
-    return { sendLike, loading, error }
+    return { sendLike, loading2, error2 }
 }
 
 export default use_Post_API

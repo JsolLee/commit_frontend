@@ -2,16 +2,13 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert } from 'react-bootstrap';
-import { FaLink, FaInstagram, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
+import { Container, Row, Col, Table, NavDropdown, Badge, Button, Form, Modal, Card, Alert, Nav } from 'react-bootstrap';
+import { FaLink, FaRegStar, FaStar, FaRegCopy, FaCalendar } from 'react-icons/fa';
 import { SiNaver } from "react-icons/si"
-import { FaMeta } from "react-icons/fa6"
 import { RiKakaoTalkFill } from "react-icons/ri"
 import { IoWarningOutline, IoShareSocialOutline } from 'react-icons/io5';
 import { BsPeopleFill } from 'react-icons/bs';
 import "../CSS/jobView.css";
-
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b9db355519fa67ef41f4ffe1d442d564&libraries=services"></script>
 
 function jobView() {
 
@@ -32,8 +29,7 @@ function jobView() {
     page: '',
     salary: '',
   });
-  console.log(data.image)
-  console.log(data)
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -44,14 +40,12 @@ function jobView() {
       .catch(err => console.log(err))
   }, []);
 
-  console.log(data.image)
-  console.log(data.location2)
-
-  // 카카오 api
-
   const [scraped, setScraped] = useState(false);
   const [show, setShow] = useState(false);
+
+  // 지도 api
   const companyAddressRef = useRef(null);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -65,12 +59,7 @@ function jobView() {
     }
   };
 
-
-
-  const handleScrapToggle = () => {
-    setScraped(!scraped);
-  };
-
+  // 주소 복사
   const handleCopyAddress = () => {
     const addressText = companyAddressRef.current.innerText.trim();
     if (addressText) {
@@ -94,6 +83,7 @@ function jobView() {
     }
   };
 
+  // 카카오 지도 api 시작
   useEffect(() => {
     // 스크립트 로드
     const script = document.createElement('script');
@@ -104,10 +94,6 @@ function jobView() {
     script.onload = () => {
       window.initKakaoMap();
     }
-
-    // 빈 의존성 배열은 마운트 후 한 번만 실행됨을 보장합니다.
-
-    console.log(data.location)
 
     // 카카오 지도 초기화 및 생성 함수
     window.initKakaoMap = () => {
@@ -126,7 +112,6 @@ function jobView() {
       var ps = new window.kakao.maps.services.Places();
 
       // 키워드로 장소를 검색합니다
-      console.log(data.location)
       ps.keywordSearch(data.location2, placesSearchCB);
 
       // 키워드 검색 완료 시 호출되는 콜백함수 입니다
@@ -158,18 +143,85 @@ function jobView() {
       }
     }
 
+    if (window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init('b9db355519fa67ef41f4ffe1d442d564')
+      }
+    }
 
   }, [data, id]);
+  // 카카오 지도 api 끝
+
+  const shareWithKakao = () => {
+    if (window.Kakao) {
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `${data.companyname}`,
+          description: `${data.title}`,
+          imageUrl: `${data.image}`,
+          link: {
+            mobileWebUrl: `http://localhost:3000/Job/JobView/${data.id}`,
+            webUrl: `http://localhost:3000/Job/JobView/${data.id}`,
+          },
+        },
+      });
+    } else {
+      alert('카카오 SDK를 로드하지 못했습니다.');
+    }
+  };
+
+  function share() {
+    var url = `http://localhost:3000/Job/JobView/${data.id}`;
+    var title = encodeURI(data.title);
+    var shareURL = "https://share.naver.com/web/shareView?url=" + url + "&title=" + title;
+    document.location = shareURL;
+  }
 
   // 채용 마감시간 설정
   const formattedCreateDatetime = moment(data.createDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm");
   const formattedFinishDatetime = data.finishDate ? moment(data.finishDate).utcOffset('+00:00').format("YYYY-MM-DD HH:mm") : null;
 
   // 이미지 정리
-  console.log(data.image)
-  console.log(typeof data.image)
-
   const imageUrls = data.image.split(',');
+
+  const membersId = sessionStorage.getItem("members_id")
+
+  // 스크랩 요청
+  // var jobId = data.id
+
+  const sendScrap = () => {
+    // 실제 백엔드 엔드포인트로 업데이트해야 합니다.
+    const backendUrl = `/Job/JobView/${data.id}`; // 실제 백엔드 엔드포인트로 업데이트하세요
+    const payload = {
+      JOB_ID: data.id
+      // 스크랩 요청을 위한 다른 필요한 데이터를 추가하세요
+    };
+
+    // 백엔드로 POST 요청을 보냅니다
+    axios.post(backendUrl, payload)
+      .then(response => {
+        // 필요하다면 응답을 처리합니다
+        console.log(response.data);
+        setScraped(true); // 작업이 스크랩되었음을 나타내는 상태를 업데이트합니다
+      })
+      .catch(error => {
+        // 에러 발생 시 처리
+        if (error.response) {
+          // 서버가 응답한 상태 코드 및 데이터
+          console.error('Server responded with', error.response.status, 'status');
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // 요청이 서버에 도달하지 않은 경우
+          console.error('Request failed to reach the server');
+        } else {
+          // 요청 설정에서 에러가 발생한 경우
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+
+    setScraped(!scraped);
+  };
 
   return (
     <Container fluid>
@@ -192,17 +244,11 @@ function jobView() {
           </Col>
           <Col>
             <NavDropdown id='share' title={<><IoShareSocialOutline className='mb-1' id='share' /> 공유</>}>
-              <NavDropdown.Item href='#action/3.1'>
+              <NavDropdown.Item onClick={shareWithKakao}>
                 <RiKakaoTalkFill /> KakaoTalk
               </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.2'>
+              <NavDropdown.Item onClick={share}>
                 <SiNaver /> Naver
-              </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>
-                <FaInstagram /> Instagram
-              </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.4'>
-                <FaMeta /> Meta
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleCopyLink}>
@@ -259,7 +305,7 @@ function jobView() {
               <tbody>
                 <tr><td className='p-1 ps-3'>경  력 : {data.career}</td></tr>
                 <tr><td className='p-1 ps-3'>학  력 : {data.degree}</td></tr>
-                
+
               </tbody>
             </Table>
           </Col>
@@ -282,7 +328,7 @@ function jobView() {
         </Row>
       </Container>
 
-      
+
 
       <div
         className='mb-5'
@@ -302,30 +348,45 @@ function jobView() {
         ))}
 
         {/*컨텐트*/}
-        <div style={{margin:'0 auto'}}>{data.content}</div>
+        <div style={{ margin: '0 auto' }}>{data.content}</div>
       </div>
 
       <Container fluid id='condition' className='my-5 d-flex justify-content-md-center'>
-        <div className='mx-3 mb-5'>
-          <Button variant="primary" size="lg">
-          {/*_blank : 새창, rel : 링크 관계지정 속성 */}
-          <a href={data.page} target="_blank" rel="noopener noreferrer">홈페이지 이동 &gt;</a>
-          </Button>
-        </div>
-        <div className='mx-3 mb-5'>
-          <Button variant="secondary" size="lg" onClick={handleScrapToggle}>
-            {scraped ? <><FaStar className='mb-1' /> Saved </> : <><FaRegStar className='mb-1' /> 스크랩</>}
-          </Button>
-        </div>
+        <Nav>
+          {(!membersId) ? (
+            <>
+              <div className='mx-3 mb-5'>
+                <Button variant="primary" size="lg">
+                  {/*_blank : 새창, rel : 링크 관계지정 속성 */}
+                  <a href={data.page} target="_blank" rel="noopener noreferrer">홈페이지 이동 &gt;</a>
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className='mx-3 mb-5'>
+                <Button variant="primary" size="lg">
+                  {/*_blank : 새창, rel : 링크 관계지정 속성 */}
+                  <a href={data.page} target="_blank" rel="noopener noreferrer">홈페이지 이동 &gt;</a>
+                </Button>
+              </div>
+              <div className='mx-3 mb-5'>
+                <Button variant="secondary" size="lg" onClick={sendScrap}>
+                  {scraped ? <><FaStar className='mb-1' /> Saved </> : <><FaRegStar className='mb-1' /> 스크랩</>}
+                </Button>
+              </div>
+            </>
+          )}
+        </Nav>
       </Container>
 
-      <Alert key="primary" variant="primary" className='text-center' style={{backgroundColor:'white'}}>
+      <Alert key="primary" variant="primary" className='text-center' style={{ backgroundColor: 'white' }}>
         <FaCalendar className='mb-1' /> 공고 기한 :  {formattedCreateDatetime} ~ {formattedFinishDatetime}
       </Alert>
 
 
       <Container id='Company' className='my-5 d-flex -content-'>
-        <Card style={{ width: '70rem', margin:'0 auto'}}>
+        <Card style={{ width: '70rem', margin: '0 auto' }}>
           <Card.Body>
             <Row>
               <Card.Title>회사 소개</Card.Title>
@@ -334,11 +395,11 @@ function jobView() {
               <Col>
                 <Card.Text className='ms-3'>
                   <Row><Col>회  사</Col></Row>
-                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.companyname} </Col></Row>
+                  <Row className='ms-1' style={{ height: '40px' }}><Col> - {data.companyname} </Col></Row>
                   <Row><Col>규  모</Col></Row>
-                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.size}</Col></Row>
+                  <Row className='ms-1' style={{ height: '40px' }}><Col> - {data.size}</Col></Row>
                   <Row><Col>홈페이지 주소 </Col></Row>
-                  <Row className='ms-1' style={{height:'40px'}}><Col> - {data.page}</Col></Row>
+                  <Row className='ms-1' style={{ height: '40px' }}><Col> - {data.page}</Col></Row>
                   <Row><Col>주  소 </Col></Row>
                   <Row className='ms-1'>
                     <Col ref={companyAddressRef}> - {data.location2} <FaRegCopy onClick={handleCopyAddress} /></Col>

@@ -57,11 +57,11 @@ const Header = (props) => {
             </Nav.Link>
             {isCommunitySubMenuOpen && (
               <ul className="sub-menu">
-                <li><Link to="/Community/boardlist">이직/신입</Link></li>
-                <li><Link to="/Community/boardlist">자소서</Link></li>
-                <li><Link to="/Community/boardlist">합격자조언</Link></li>
-                <li><Link to="/Community/boardlist">구인/구직</Link></li>
-                <li><Link to="/Community/boardlist">면접</Link></li>
+                <li><Link to="/Community/boardlist/newstart">이직/신입</Link></li>
+                <li><Link to="/Community/boardlist/resume">자소서</Link></li>
+                <li><Link to="/Community/boardlist/review">합격자조언</Link></li>
+                <li><Link to="/Community/boardlist/recruit">구인/구직</Link></li>
+                <li><Link to="/Community/boardlist/interview">면접</Link></li>
               </ul>
             )}
           </Nav>
